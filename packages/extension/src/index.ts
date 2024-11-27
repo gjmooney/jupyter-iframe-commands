@@ -7,6 +7,7 @@ import {
 } from '@jupyterlab/application';
 
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
+import { CommandBridge } from 'jupyter-iframe-commands-host';
 
 // import { expose, windowEndpoint } from 'comlink';
 
@@ -26,7 +27,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     settingRegistry: ISettingRegistry | null
   ) => {
     console.log(
-      'JupyterLab extension jupyter-iframe-commands is activated wooooo!'
+      'JupyterLab extension jupyter-iframe-commands is activated wooooo check aaaaaaaaatsdsdsdsdswo!'
     );
 
     if (settingRegistry) {
@@ -46,10 +47,10 @@ const plugin: JupyterFrontEndPlugin<void> = {
         });
     }
 
-    // const { commands } = app;
-    // const api = new CommandBridge('jupyterlab', { commands });
-    // const endpoint = windowEndpoint(self.parent);
-    // expose(api, endpoint);
+    const { commands } = app;
+
+    const bridge = new CommandBridge('jupyterlabiframe', { commands });
+    console.log('bridge.listCommands', await bridge.listCommands());
   }
 };
 

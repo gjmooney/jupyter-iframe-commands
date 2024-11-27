@@ -17,23 +17,14 @@ declare global {
  */
 export class CommandBridge {
   constructor(iframeId: string, options: CommandBridge.IOptions) {
-    this._iframe = document.getElementById(iframeId) as HTMLIFrameElement;
-
     this._commands = options.commands;
 
-    if (!this._iframe) {
-      console.error('iframe not found');
+    if (!window.parent) {
+      console.log('Host window not found');
       return;
     }
 
-    this._childWindow = this._iframe.contentWindow;
-
-    if (!this._childWindow) {
-      console.error('child window not found');
-      return;
-    }
-
-    this._endpoint = windowEndpoint(this._childWindow);
+    this._endpoint = windowEndpoint(window.parent);
     this._commandBridge = wrap(this._endpoint);
 
     // For demo purposes for now, and to make it easier to test the commands
@@ -50,8 +41,6 @@ export class CommandBridge {
   }
 
   private _commands: CommandRegistry;
-  private _iframe: HTMLIFrameElement | null;
-  private _childWindow: Window | undefined | null;
   private _endpoint: Endpoint | undefined;
   private _commandBridge: Remote<unknown> | undefined;
 }
