@@ -16,8 +16,8 @@ declare global {
  * A bridge to expose actions on JupyterLab commands.
  */
 export class CommandBridge {
-  constructor(iframeId: string, options: CommandBridge.IOptions) {
-    this._commands = options.commands;
+  constructor(iframeId: string, options?: CommandBridge.IOptions) {
+    this._commands = options?.commands || 'test';
 
     if (!window.parent) {
       console.log('Host window not found');
@@ -40,7 +40,11 @@ export class CommandBridge {
     return this._commands.listCommands();
   }
 
-  private _commands: CommandRegistry;
+  async test(): Promise<string> {
+    return 'this is a test';
+  }
+
+  private _commands: any;
   private _endpoint: Endpoint | undefined;
   private _commandBridge: Remote<unknown> | undefined;
 }

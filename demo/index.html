@@ -5,6 +5,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Parent</title>
+    <script type="module">
+      import { CommandBridge } from 'https://cdn.jsdelivr.net/gh/gjmooney/jupyter-iframe-commands@companion_package/packages/host/lib/index.js';
+
+      const bridge = new CommandBridge({ iframeId: 'jupyterlab' });
+
+      console.log('bridge test', await bridge.test());
+    </script>
   </head>
   <body>
     <div
