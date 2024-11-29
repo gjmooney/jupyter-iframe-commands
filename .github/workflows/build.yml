@@ -163,14 +163,6 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Base Setup
-        uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
-
-      - name: Download extension package
-        uses: actions/download-artifact@v4
-        with:
-          name: extension-artifacts
-
       - name: Install the dependencies
         run: |
           set -eux
@@ -191,7 +183,7 @@ jobs:
 
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/main'
+    if: github.ref_name == 'fix_pages'
     permissions:
       pages: write
       id-token: write
