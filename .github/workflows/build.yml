@@ -190,7 +190,7 @@ jobs:
           path: ./ghpages
 
   deploy:
-    needs: build
+    needs: build-lite
     if: github.ref == 'refs/heads/main'
     permissions:
       pages: write
