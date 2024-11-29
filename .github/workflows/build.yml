@@ -182,8 +182,8 @@ jobs:
           path: ./ghpages
 
   deploy:
-    needs: build
-    if: github.ref_name == 'fix_pages'
+    needs: build-lite
+    if: github.ref == 'refs/heads/main'
     permissions:
       pages: write
       id-token: write
