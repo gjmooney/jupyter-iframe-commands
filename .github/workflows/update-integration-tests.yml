@@ -67,17 +67,10 @@ jobs:
       - name: Base Setup
         uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
 
-      - name: Install the dependencies
+      - name: Install the dependencies and extension
         run: |
           set -eux
           python -m pip install -r requirements.txt
-          jlpm
-          jlpm build
-          python -m pip install .
-
-      - name: Install extension
-        run: |
-          set -eux
           jlpm
           jlpm build
           python -m pip install .
