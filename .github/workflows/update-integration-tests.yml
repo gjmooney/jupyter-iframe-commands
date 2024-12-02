@@ -67,6 +67,10 @@ jobs:
       - name: Base Setup
         uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
 
+      - name: Install playwright dependencies
+        working-directory: ui-tests
+        run: jlpm
+          
       - name: Install the dependencies and extension
         run: |
           set -eux
@@ -74,12 +78,6 @@ jobs:
           jlpm
           jlpm build
           python -m pip install .
-
-       - name: Install playwright dependencies
-        working-directory: ui-tests
-        env:
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
-        run: jlpm
 
       - uses: jupyterlab/maintainer-tools/.github/actions/update-snapshots@v1
         with:
