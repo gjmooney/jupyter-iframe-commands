@@ -26,6 +26,8 @@ export class CommandBridge {
       return;
     }
 
+    // something to commit
+
     this._childWindow = this._iframe.contentWindow;
 
     if (!this._childWindow) {
