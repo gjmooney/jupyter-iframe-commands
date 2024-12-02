@@ -84,6 +84,12 @@ jobs:
           YARN_ENABLE_IMMUTABLE_INSTALLS: 0
         run: jlpm install
 
+       - name: Install playwright dependencies
+        working-directory: ui-tests
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+        run: jlpm
+
       - uses: jupyterlab/maintainer-tools/.github/actions/update-snapshots@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -91,3 +97,9 @@ jobs:
           start_server_script: 'null'
           test_folder: ui-tests
           npm_client: jlpm
+
+      - name: Comment back on the PR
+        run: |
+          gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments --raw-field 'body=Documentation snapshots updated.'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
