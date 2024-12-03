@@ -43,7 +43,6 @@ jobs:
       - name: Package the extension
         run: |
           set -eux
-
           pip install build
           python -m build
           pip uninstall -y "jupyter_iframe_commands" jupyterlab
@@ -76,7 +75,6 @@ jobs:
           sudo rm -rf $(which node)
 
           pip install "jupyterlab>=4.0.0,<5" jupyter_iframe_commands*.whl
-
 
           jupyter labextension list
           jupyter labextension list 2>&1 | grep -ie "jupyter-iframe-commands.*OK"
