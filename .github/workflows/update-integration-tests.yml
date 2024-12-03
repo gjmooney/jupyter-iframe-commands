@@ -81,6 +81,7 @@ jobs:
         working-directory: ui-tests
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+          YARN_ENABLE_IMMUTABLE_INSTALLS: 0
         run: jlpm install
 
       - uses: jupyterlab/maintainer-tools/.github/actions/update-snapshots@v1
