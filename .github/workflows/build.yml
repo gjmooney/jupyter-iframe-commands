@@ -102,10 +102,13 @@ jobs:
         with:
           name: extension-artifacts
 
+      # Need to build host package so import can resolve
       - name: Install the extension
         run: |
           set -eux
           python -m pip install "jupyterlab>=4.0.0,<5" jupyter_iframe_commands*.whl
+          jlpm
+          jlpm build
 
       - name: Install dependencies
         working-directory: ui-tests
