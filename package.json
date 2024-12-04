@@ -16,7 +16,8 @@
   "author": "QuantStack",
   "workspaces": [
     "packages/*",
-    "ghpages/"
+    "ghpages/",
+    "ui-tests/"
   ],
   "scripts": {
     "build": "lerna run build",
