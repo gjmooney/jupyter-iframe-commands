@@ -49,28 +49,16 @@ Examples of commands with arguments:
 > [!TIP]
 > For reference JupyterLab defines a list of default commands here: https://jupyterlab.readthedocs.io/en/latest/user/commands.html#commands-list
 
-## Demos
-
-### Local Demo
+## Local Demo
 
 To run the demo on a local Jupyter Lab instance:
 
 - Follow the [development install instructions](#development-install)
-- `cd demo`
 - Run: `jlpm start:lab`
 - In another terminal
-- Run: `jlpm start:local`
+- Run: `jlpm start:server`
 
 Open http://localhost:8080 in your browser.
-
-### Lite Demo
-
-To run the demo on a Jupyter Lite instance:
-
-- Follow the [development install instructions](#development-install)
-- Run: `jlpm build:lite`
-- `cd demo`
-- Run: `jlpm start:lite`
 
 ## Uninstall
 

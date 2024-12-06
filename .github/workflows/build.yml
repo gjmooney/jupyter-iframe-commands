@@ -181,10 +181,10 @@ jobs:
 
       - name: Build the JupyterLite assets
         run: |
-          jupyter lite build --contents README.md --output-dir demo/public/lite
+          jupyter lite build --contents README.md --output-dir ghpages/public/lite
 
       - name: Install and build Vite dependencies
-        working-directory: demo
+        working-directory: ghpages
         run: |
           jlpm
           jlpm build
@@ -196,7 +196,7 @@ jobs:
         id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./demo/dist
+          path: ./ghpages/dist
 
   deploy:
     needs: build-lite
