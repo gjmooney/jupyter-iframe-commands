@@ -4,15 +4,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/src/style.css" />
     <title>Demo</title>
-    <script type="module" src="src/main.js"></script>
+    <script type="module">
+      import { CommandBridge } from 'jupyter-iframe-commands-host';
+
+      const commandBridge = new CommandBridge({ iframeId: 'jupyterlab' })
+        .commandBridge;
+
+      document
+        .getElementById('list-commands')
+        .addEventListener('click', async () => {
+          console.log('Commands: ', await commandBridge.listCommands());
+        });
+
+      document.getElementById('commands').addEventListener('submit', e => {
+        e.preventDefault();
+        const command = document.querySelector('input[name="command"]').value;
+
+        // Single quotes cause an error
+        const args = document
+          .querySelector('input[name="args"]')
+          .value.replace(/'/g, '"');
+        commandBridge.execute(command, args ? JSON.parse(args) : {});
+      });
+    </script>
   </head>
   <body>
-    <div class="demo-top">
-      <h1>%VITE_TITLE% Demo</h1>
-      <button id="instructions">Instructions</button>
-      <div class="input-area">
+    <div
+      style="display: flex; align-items: center; justify-content: space-around"
+    >
+      <h1>Local Demo</h1>
+      <div>
         <form id="commands">
           <input type="text" name="command" placeholder="Enter a command" />
           <input type="text" name="args" placeholder="Enter args (optional)" />
@@ -25,7 +47,7 @@
 
     <iframe
       id="jupyterlab"
-      src="%VITE_DEMO_SRC%"
+      src="http://localhost:8888"
       sandbox="allow-scripts allow-same-origin"
       style="width: 100%; height: 100vh"
     ></iframe>
