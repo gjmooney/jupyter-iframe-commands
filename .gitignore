@@ -126,6 +126,7 @@ dmypy.json
 
 # lite build for demo
 demo/public/lite
+demo-react/public/lite
 .jupyterlite.doit.db
 
 # nx cache files

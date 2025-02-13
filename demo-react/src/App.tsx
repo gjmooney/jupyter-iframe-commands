@@ -3,24 +3,39 @@ import { useEffect, useState } from 'react';
 import Instructions from './Instructions';
 import JupyterIframe from './JupyterIframe';
 import ListCommands from './ListCommands';
+import ModeToggle from './ModeSelect';
 
 function App() {
-  const commandBridge = createBridge({ iframeId: 'jupyterlab' });
-
   const [commands, setCommands] = useState<string[]>([]);
+  const [commandBridge, setCommandBridge] = useState<any>();
 
   useEffect(() => {
-    const fetchCommands = async () => {
-      const commands = await commandBridge.listCommands();
-      commands.sort();
-
-      console.log('commands', commands);
-
-      setCommands(commands);
+    window.onmessage = e => {
+      if (e.data === 'extension-loaded') {
+        // alert('got message');
+        fetchCommands();
+      }
     };
 
-    fetchCommands();
+    /**
+     * This works in lite but not lab
+     */
+    // window.document.addEventListener('myCustomEvent', handleEvent, false);
+    // function handleEvent(e: any) {
+    //   console.log(e.detail); // outputs: {foo: 'bar'}
+    //   fetchCommands();
+    // }
   }, []);
+
+  const fetchCommands = async () => {
+    const commandBridge = createBridge({ iframeId: 'jupyterlab' });
+    const commands = await commandBridge.listCommands();
+    commands.sort();
+
+    console.log('commands', commands);
+    setCommandBridge(commandBridge);
+    setCommands(commands);
+  };
 
   return (
     <>
@@ -28,21 +43,9 @@ function App() {
         {/* <button onClick={fetchCommands}>SODSOD</button> */}
         <h1>{import.meta.env.VITE_TITLE} Demo</h1>
         <div className="button-row">
-          <Instructions commandBridge={commandBridge} />
-          {/* <button id="list-commands" aria-label="Show available commands">
-            List Available Commands
-          </button> */}
+          <Instructions />
           <ListCommands commands={commands} />
-          <div className="mode-toggle">
-            <label>
-              <input type="radio" name="mode" value="lab" checked />
-              <span>JupyterLab</span>
-            </label>
-            <label>
-              <input type="radio" name="mode" value="notebook" />
-              <span>Jupyter Notebook</span>
-            </label>
-          </div>
+          <ModeToggle />
         </div>
         <div className="input-area">
           <form id="commands" autoComplete="off">

@@ -54,6 +54,17 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     const endpoint = windowEndpoint(self.parent);
     expose(api, endpoint);
+
+    //TODO temp
+    console.log('window.top', window.top);
+    window.parent?.postMessage('extension-loaded', 'http://localhost:8080/');
+
+    /**
+     * Works in lite but not lab
+     */
+    // const data = { foo: 'bar' };
+    // const event = new CustomEvent('myCustomEvent', { detail: data });
+    // window.parent.document.dispatchEvent(event);
   }
 };
 

@@ -1,41 +1,8 @@
 import { useRef } from 'react';
 import './App.css';
 
-interface IInstructionProps {
-  commandBridge: any;
-}
-
-const Instructions = ({ commandBridge }: IInstructionProps) => {
+const Instructions = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const submitButtonRef = useRef<HTMLButtonElement>(null);
-
-  const submitCommand = async (command: string, args: string | undefined) => {
-    try {
-      await commandBridge.execute(command, args ? JSON.parse(args) : {});
-    } catch (e) {
-      //   document.getElementById('error-dialog').innerHTML = `<code>${e}</code>`;
-      //   errorDialog.showModal();
-    }
-  };
-  const handleSubmit = async (e: any) => {
-    if (dialogRef.current && submitButtonRef.current) {
-      e.preventDefault();
-      const select = document.getElementById(
-        'command-select'
-      ) as HTMLSelectElement;
-      let command = select?.value;
-
-      if (command) {
-        let args;
-        if (command.includes('Light') || command.includes('Dark')) {
-          args = `{"theme": "${command}"}`;
-          command = 'apputils:change-theme';
-        }
-        await submitCommand(command, args);
-      }
-      dialogRef.current.close();
-    }
-  };
 
   const handleOpenDialog = () => {
     if (dialogRef.current) {
@@ -164,11 +131,7 @@ const Instructions = ({ commandBridge }: IInstructionProps) => {
             <button value="cancel" onClick={handleCloseDialog}>
               Cancel
             </button>
-            <button
-              value="default"
-              id="command-select-submit"
-              onClick={handleSubmit}
-            >
+            <button value="default" id="command-select-submit">
               OK
             </button>
           </div>
