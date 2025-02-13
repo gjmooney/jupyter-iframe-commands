@@ -16,7 +16,8 @@
   "author": "QuantStack",
   "workspaces": [
     "packages/*",
-    "demo"
+    "demo",
+    "demo-react"
   ],
   "scripts": {
     "build": "lerna run build",
