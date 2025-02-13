@@ -4391,6 +4391,7 @@ __metadata:
     eslint-plugin-react-hooks: ^5.0.0
     eslint-plugin-react-refresh: ^0.4.18
     globals: ^15.14.0
+    jupyter-iframe-commands-host: ^0.1.0
     react: ^19.0.0
     react-dom: ^19.0.0
     typescript: ~5.7.2

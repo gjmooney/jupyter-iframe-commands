@@ -137,3 +137,5 @@ Untitled*.ipynb
 
 # Pixi environments
 .pixi
+
+.vscode/*
