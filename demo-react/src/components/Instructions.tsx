@@ -1,19 +1,29 @@
-import { useRef } from 'react';
-import './App.css';
+import { FormEvent, useRef, useState } from 'react';
 
-const Instructions = () => {
+interface IIinstructionProps {
+  submitCommand: (command: string, args: string) => void;
+}
+
+const Instructions = ({ submitCommand }: IIinstructionProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  const handleOpenDialog = () => {
-    if (dialogRef.current) {
-      dialogRef.current.showModal();
-    }
-  };
+  const [selectValue, setSelectValue] = useState('');
 
-  const handleCloseDialog = () => {
-    if (dialogRef.current) {
-      dialogRef.current.close();
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    if (selectValue) {
+      let args = '';
+      let select = '';
+      if (selectValue.includes('Light') || selectValue.includes('Dark')) {
+        args = `{"theme": "${selectValue}"}`;
+        select = 'apputils:change-theme';
+      } else {
+        select = selectValue;
+      }
+      submitCommand(select, args);
     }
+    dialogRef.current?.close();
   };
 
   return (
@@ -21,7 +31,9 @@ const Instructions = () => {
       <button
         id="instructions"
         aria-label="Show instructions"
-        onClick={handleOpenDialog}
+        onClick={() => {
+          dialogRef.current?.showModal();
+        }}
       >
         <span>📖 Instructions</span>
       </button>
@@ -110,7 +122,12 @@ const Instructions = () => {
               For even more convenience you can also select a command from the
               dropdown:
             </p>
-            <select id="command-select">
+            <select
+              id="command-select"
+              onChange={e => {
+                setSelectValue(e.target.value);
+              }}
+            >
               <option value="">Select a command</option>
               <optgroup label="Commands">
                 <option value="application:toggle-left-area">
@@ -128,10 +145,19 @@ const Instructions = () => {
             </select>
           </div>
           <div className="dialog-buttons">
-            <button value="cancel" onClick={handleCloseDialog}>
+            <button
+              value="cancel"
+              onClick={() => {
+                dialogRef.current?.close();
+              }}
+            >
               Cancel
             </button>
-            <button value="default" id="command-select-submit">
+            <button
+              value="default"
+              id="command-select-submit"
+              onClick={handleSubmit}
+            >
               OK
             </button>
           </div>

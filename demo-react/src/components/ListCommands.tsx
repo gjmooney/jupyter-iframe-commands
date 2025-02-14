@@ -34,7 +34,7 @@ const ListCommands = ({ commands }: IListCommandsProps) => {
         <h2 style={{ marginTop: 0 }}>Available Commands</h2>
         <div id="commands-list">
           {commands.map(command => {
-            return <div>{command}</div>;
+            return <div key={command}>{command}</div>;
           })}
         </div>
         <div className="dialog-buttons">
