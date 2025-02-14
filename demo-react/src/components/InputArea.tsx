@@ -5,13 +5,14 @@ interface InputAreaProps {
 }
 
 const InputArea = ({ submitCommand }: InputAreaProps) => {
-  const [command, setCommand] = useState('');
-  const [args, setArgs] = useState('');
+  const [command, setCommand] = useState('apputils:change-theme');
+  const [args, setArgs] = useState('{"theme":"JupyterLab Light"}');
 
-  const cumFart = async (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
 
     // Single quotes cause an error
+    console.log('args', args);
     submitCommand(command, args.replace(/'/g, '"'));
   };
 
@@ -27,6 +28,7 @@ const InputArea = ({ submitCommand }: InputAreaProps) => {
             setCommand(e.target.value);
           }}
           required
+          value={command}
         />
         <input
           type="text"
@@ -36,8 +38,9 @@ const InputArea = ({ submitCommand }: InputAreaProps) => {
           onChange={e => {
             setArgs(e.target.value);
           }}
+          value={args}
         />
-        <button type="submit" onClick={cumFart}>
+        <button type="submit" onClick={submit}>
           Submit Command
         </button>
       </form>

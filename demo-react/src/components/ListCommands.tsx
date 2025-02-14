@@ -1,14 +1,30 @@
 // import { createBridge } from 'jupyter-iframe-commands-host';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 interface IListCommandsProps {
   commands: string[];
+  bridge?: any;
+  getCommands: () => void;
 }
 
-const ListCommands = ({ commands }: IListCommandsProps) => {
+const ListCommands = ({
+  commands,
+  bridge,
+  getCommands
+}: IListCommandsProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
+  const [comms, setComms] = useState<string[]>([]);
+  console.log('bridge in list', bridge()?.listCommands());
+
+  console.log('commands prom', commands);
+
   const handleOpenDialog = async () => {
+    const fromBridge = await bridge().listCommands();
+    setComms(fromBridge);
+
+    const dd = await getCommands();
+    console.log('dd', dd);
     if (dialogRef.current) {
       dialogRef.current.showModal();
     }
@@ -33,7 +49,7 @@ const ListCommands = ({ commands }: IListCommandsProps) => {
       <dialog ref={dialogRef}>
         <h2 style={{ marginTop: 0 }}>Available Commands</h2>
         <div id="commands-list">
-          {commands.map(command => {
+          {comms.map(command => {
             return <div key={command}>{command}</div>;
           })}
         </div>

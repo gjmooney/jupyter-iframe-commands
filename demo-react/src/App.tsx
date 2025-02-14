@@ -1,4 +1,3 @@
-import { ICommandBridgeRemote } from 'jupyter-iframe-commands';
 import { useCallback, useRef, useState } from 'react';
 import ErrorDialog from './components/Error';
 import InputArea from './components/InputArea';
@@ -14,43 +13,25 @@ function App() {
 
   const dialogRef = useRef<HTMLDialogElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const bridgeRef = useRef<ICommandBridgeRemote>(null);
 
   let bridge: any;
 
   console.log('check');
 
   const getBridge = useCallback(() => {
+    console.log(
+      'iframeRef.current?.getBridge()',
+      //@ts-expect-error w
+      iframeRef.current?.getBridge()
+    );
     //@ts-expect-error w
     return iframeRef.current?.getBridge();
-  }, []);
-
-  // useEffect(() => {
-  //   if (!isBridgeReady) {
-  //     return;
-  //   }
-
-  //   //@ts-expect-error we
-  //   bridge = iframeRef.current?.getBridge();
-  //   bridgeRef.current = bridge;
-
-  //   // bridge.execute(
-  //   //   'apputils:change-theme',
-  //   //   JSON.parse('{"theme":"JupyterLab Dark"}')
-  //   // );
-  //   const getCommands = async () => {
-  //     const cl = await bridge.listCommands();
-  //     setCommands(cl);
-  //   };
-  //   getCommands();
-
-  //   // ! causes TypeError: rawValue.apply is not a function
-  //   // setCommandBridge(commandBridge);
-  // }, [isBridgeReady]);
+  }, [isBridgeReady]);
 
   const listComms = async () => {
     // example of using method directly instead of with bridge
-    const commands = await getBridge().listCommands();
+    //@ts-expect-error wewe
+    const commands = await iframeRef.current?.listCommands();
     setCommands(commands ?? []);
     console.log('listComms', commands);
   };
@@ -77,7 +58,11 @@ function App() {
         <h1>{import.meta.env.VITE_TITLE} Demo</h1>
         <div className="button-row">
           <Instructions submitCommand={submitCommand} />
-          <ListCommands commands={commands} bridge={bridge} />
+          <ListCommands
+            bridge={getBridge} //can pass bridge itself
+            getCommands={getBridge()?.listCommands} // can pass function from bridge
+            commands={getBridge()?.listCommands()} // can promise result of calling function
+          />
           <ModeToggle />
         </div>
         <InputArea submitCommand={submitCommand} />
