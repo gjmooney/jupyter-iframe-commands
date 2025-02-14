@@ -47,8 +47,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
       async execute(command: string, args: ReadonlyPartialJSONObject) {
         await commands.execute(command, args);
       },
-      listCommands() {
-        return commands.listCommands();
+      async listCommands() {
+        return await commands.listCommands();
       }
     };
 
@@ -56,7 +56,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
     expose(api, endpoint);
 
     //TODO temp
-    console.log('window.top', window.top);
     window.parent?.postMessage('extension-loaded', 'http://localhost:8080/');
 
     /**

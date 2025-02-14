@@ -1,33 +1,34 @@
 // import { createBridge } from 'jupyter-iframe-commands-host';
+import { ICommandBridgeRemote } from 'jupyter-iframe-commands';
 import { useRef, useState } from 'react';
 
 interface IListCommandsProps {
-  commands: string[];
-  bridge?: any;
-  getCommands: () => void;
+  bridge: () => ICommandBridgeRemote;
+  apiFunction: () => Promise<string[]>;
+  apiResult: Promise<string[]>;
 }
 
 const ListCommands = ({
-  commands,
   bridge,
-  getCommands
+  apiFunction,
+  apiResult
 }: IListCommandsProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  const [comms, setComms] = useState<string[]>([]);
-  console.log('bridge in list', bridge()?.listCommands());
-
-  console.log('commands prom', commands);
+  const [commands, setCommands] = useState<string[]>([]);
 
   const handleOpenDialog = async () => {
+    console.log('apiResult', apiResult);
     const fromBridge = await bridge().listCommands();
-    setComms(fromBridge);
+    console.log('fromBridge', fromBridge);
 
-    const dd = await getCommands();
-    console.log('dd', dd);
+    const fromFunction = await apiFunction();
+    console.log('fromFunction', fromFunction);
     if (dialogRef.current) {
       dialogRef.current.showModal();
     }
+
+    setCommands(fromFunction);
   };
 
   const handleCloseDialog = () => {
@@ -49,7 +50,7 @@ const ListCommands = ({
       <dialog ref={dialogRef}>
         <h2 style={{ marginTop: 0 }}>Available Commands</h2>
         <div id="commands-list">
-          {comms.map(command => {
+          {commands.map(command => {
             return <div key={command}>{command}</div>;
           })}
         </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 const ModeToggle = () => {
   const [mode, setMode] = useState('lab');
@@ -29,7 +29,7 @@ const ModeToggle = () => {
     iframe.src = currentUrl.toString();
   }, [mode]);
 
-  const handleModeChange = (e: any) => {
+  const handleModeChange = (e: ChangeEvent<HTMLInputElement>) => {
     setMode(e.target.value);
   };
 

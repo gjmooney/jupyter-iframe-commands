@@ -12,7 +12,6 @@ const InputArea = ({ submitCommand }: InputAreaProps) => {
     e.preventDefault();
 
     // Single quotes cause an error
-    console.log('args', args);
     submitCommand(command, args.replace(/'/g, '"'));
   };
 

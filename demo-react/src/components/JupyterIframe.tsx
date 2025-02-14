@@ -1,12 +1,13 @@
+import { ICommandBridgeRemote } from 'jupyter-iframe-commands';
 import { createBridge } from 'jupyter-iframe-commands-host';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
 interface IProps {
-  onBridgeReady: any;
+  onBridgeReady: (value: boolean) => void;
 }
 const JupyterIframe = forwardRef(({ onBridgeReady }: IProps, ref) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const bridgeRef = useRef<any>(null);
+  const bridgeRef = useRef<ICommandBridgeRemote>(null);
 
   useEffect(() => {
     // ! This works in lite but not lab
@@ -29,7 +30,7 @@ const JupyterIframe = forwardRef(({ onBridgeReady }: IProps, ref) => {
 
   useImperativeHandle(ref, () => ({
     getBridge: () => bridgeRef.current,
-    listCommands: async () => await bridgeRef.current.listCommands()
+    listCommands: async () => await bridgeRef.current?.listCommands()
   }));
 
   return (
