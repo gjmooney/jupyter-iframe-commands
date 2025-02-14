@@ -1,5 +1,5 @@
-import { createBridge } from 'jupyter-iframe-commands-host';
-import { useRef, useState } from 'react';
+import { ICommandBridgeRemote } from 'jupyter-iframe-commands';
+import { useCallback, useRef, useState } from 'react';
 import ErrorDialog from './components/Error';
 import InputArea from './components/InputArea';
 import Instructions from './components/Instructions';
@@ -9,58 +9,61 @@ import ModeToggle from './components/ModeSelect';
 
 function App() {
   const [commands, setCommands] = useState<string[]>([]);
-  const [commandBridge, setCommandBridge] = useState<any>();
   const [errorMessage, setErrorMessage] = useState('');
+  const [isBridgeReady, setIsBridgeReady] = useState(false);
+
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const bridgeRef = useRef<ICommandBridgeRemote>(null);
+
+  let bridge: any;
+
+  console.log('check');
+
+  const getBridge = useCallback(() => {
+    //@ts-expect-error w
+    return iframeRef.current?.getBridge();
+  }, []);
 
   // useEffect(() => {
-  //   window.onmessage = e => {
-  //     if (e.data === 'extension-loaded') {
-  //       fetchCommands();
-  //     }
+  //   if (!isBridgeReady) {
+  //     return;
+  //   }
+
+  //   //@ts-expect-error we
+  //   bridge = iframeRef.current?.getBridge();
+  //   bridgeRef.current = bridge;
+
+  //   // bridge.execute(
+  //   //   'apputils:change-theme',
+  //   //   JSON.parse('{"theme":"JupyterLab Dark"}')
+  //   // );
+  //   const getCommands = async () => {
+  //     const cl = await bridge.listCommands();
+  //     setCommands(cl);
   //   };
+  //   getCommands();
 
-  //   /**
-  //    * This works in lite but not lab
-  //    */
-  //   // window.document.addEventListener('myCustomEvent', handleEvent, false);
-  //   // function handleEvent(e: any) {
-  //   //   console.log(e.detail); // outputs: {foo: 'bar'}
-  //   //   fetchCommands();
-  //   // }
-  // }, []);
+  //   // ! causes TypeError: rawValue.apply is not a function
+  //   // setCommandBridge(commandBridge);
+  // }, [isBridgeReady]);
 
-  async function init() {
-    const commandBridge = createBridge({ iframeId: 'jupyterlab' });
-    const commands = await commandBridge.listCommands();
-    commands.sort();
-
-    commandBridge.execute(
-      'apputils:change-theme',
-      JSON.parse('{"theme":"JupyterLab Light"}')
-    );
-    console.log('commands', commands);
-    // causes TypeError: rawValue.apply is not a function
-    // setCommandBridge(commandBridge);
-    // setCommands(commands);
-  }
-
-  // const fetchCommands = async () => {
-  //   const commandBridge = createBridge({ iframeId: 'jupyterlab' });
-  //   const commands = await commandBridge.listCommands();
-  //   commands.sort();
-
-  //   console.log('commands', commands);
-  //   setCommandBridge(commandBridge);
-  //   setCommands(commands);
-  // };
+  const listComms = async () => {
+    // example of using method directly instead of with bridge
+    const commands = await getBridge().listCommands();
+    setCommands(commands ?? []);
+    console.log('listComms', commands);
+  };
 
   const submitCommand = async (command: string, args: string) => {
     console.log('command', command);
     console.log('args', args);
 
+    bridge = getBridge();
+
+    console.log('bridge', bridge);
     try {
-      // await commandBridge.execute(command, args ? JSON.parse(args) : {});
+      bridge.execute(command, args ? JSON.parse(args) : {});
     } catch (e: any) {
       setErrorMessage(e instanceof Error ? e.message : String(e));
       dialogRef.current?.showModal();
@@ -70,16 +73,16 @@ function App() {
   return (
     <>
       <div className="demo-top">
-        <button onClick={init}>INIT</button>
+        <button onClick={listComms}>Manual Commands</button>
         <h1>{import.meta.env.VITE_TITLE} Demo</h1>
         <div className="button-row">
           <Instructions submitCommand={submitCommand} />
-          <ListCommands commands={commands} />
+          <ListCommands commands={commands} bridge={bridge} />
           <ModeToggle />
         </div>
         <InputArea submitCommand={submitCommand} />
       </div>
-      <JupyterIframe />
+      <JupyterIframe ref={iframeRef} onBridgeReady={setIsBridgeReady} />
       <ErrorDialog ref={dialogRef} message={errorMessage} />
     </>
   );
