@@ -60,7 +60,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     // Add host css to Jupyter
     window.onmessage = e => {
-      console.log('e', e);
       if (e.data.type === 'CSS') {
         const styleTag = document.createElement('style');
         styleTag.id = 'searchText';

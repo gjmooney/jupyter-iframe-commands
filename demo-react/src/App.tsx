@@ -45,7 +45,11 @@ function App() {
         </div>
         <InputArea submitCommand={submitCommand} />
       </div>
-      <JupyterIframe ref={iframeRef} onBridgeReady={setIsBridgeReady} />
+      <JupyterIframe
+        ref={iframeRef}
+        iframeSrc={import.meta.env.VITE_DEMO_SRC}
+        onBridgeReady={setIsBridgeReady}
+      />
       <ErrorDialog ref={dialogRef} message={errorMessage} />
     </>
   );
