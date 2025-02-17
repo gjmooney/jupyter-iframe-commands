@@ -5,20 +5,14 @@ import { useRef, useState } from 'react';
 interface IListCommandsProps {
   bridge: () => ICommandBridgeRemote;
   apiFunction: () => Promise<string[]>;
-  apiResult: Promise<string[]>;
 }
 
-const ListCommands = ({
-  bridge,
-  apiFunction,
-  apiResult
-}: IListCommandsProps) => {
+const ListCommands = ({ bridge, apiFunction }: IListCommandsProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const [commands, setCommands] = useState<string[]>([]);
 
   const handleOpenDialog = async () => {
-    console.log('apiResult', apiResult);
     const fromBridge = await bridge().listCommands();
     console.log('fromBridge', fromBridge);
 

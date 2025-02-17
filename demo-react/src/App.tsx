@@ -39,7 +39,6 @@ function App() {
           <ListCommands
             bridge={getBridge} //can pass bridge itself
             apiFunction={getBridge()?.listCommands} // can pass function from bridge
-            apiResult={getBridge()?.listCommands()} // can pass promise result of calling function
           />
           <ModeToggle />
         </div>
