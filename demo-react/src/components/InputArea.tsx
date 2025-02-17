@@ -1,10 +1,10 @@
 import { FormEvent, useState } from 'react';
 
-interface InputAreaProps {
+interface IInputAreaProps {
   submitCommand: (command: string, args: string) => void;
 }
 
-const InputArea = ({ submitCommand }: InputAreaProps) => {
+const InputArea = ({ submitCommand }: IInputAreaProps) => {
   const [command, setCommand] = useState('apputils:change-theme');
   const [args, setArgs] = useState('{"theme":"JupyterLab Light"}');
 
