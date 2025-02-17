@@ -5,7 +5,7 @@ import InputArea from './components/InputArea';
 import Instructions from './components/Instructions';
 import JupyterIframe from './components/JupyterIframe';
 import ListCommands from './components/ListCommands';
-import ModeToggle from './components/ModeSelect';
+import ModeToggle from './components/ModeToggle';
 
 function App() {
   const [errorMessage, setErrorMessage] = useState('');

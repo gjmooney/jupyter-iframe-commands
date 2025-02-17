@@ -12,13 +12,11 @@ const ModeToggle = () => {
 
     // Update iframe source when mode changes
     const isNotebookView = mode === 'notebook';
-    let currentUrl = new URL(iframe.src);
+    let currentUrl: any = new URL(iframe.src);
     const isLite = currentUrl.pathname.includes('lite');
 
     if (isLite) {
-      currentUrl = new URL(
-        `./lite/${isNotebookView ? 'notebooks/index.html?path=example.ipynb' : 'lab'}`
-      );
+      currentUrl = `./lite/${isNotebookView ? 'notebooks/index.html?path=example.ipynb' : 'index.html'}`;
     } else {
       currentUrl.pathname = isNotebookView
         ? '/notebooks/example.ipynb'
