@@ -55,8 +55,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
     const endpoint = windowEndpoint(self.parent);
     expose(api, endpoint);
 
-    //TODO temp
-    window.parent?.postMessage('extension-loaded', 'http://localhost:8080/');
+    //TODO targetOrigin should be host page
+    window.parent?.postMessage('extension-loaded', '*');
 
     /**
      * Works in lite but not lab
