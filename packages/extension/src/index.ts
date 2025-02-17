@@ -58,12 +58,16 @@ const plugin: JupyterFrontEndPlugin<void> = {
     //TODO targetOrigin should be host page
     window.parent?.postMessage('extension-loaded', '*');
 
-    /**
-     * Works in lite but not lab
-     */
-    // const data = { foo: 'bar' };
-    // const event = new CustomEvent('myCustomEvent', { detail: data });
-    // window.parent.document.dispatchEvent(event);
+    // Add host css to Jupyter
+    window.onmessage = e => {
+      console.log('e', e);
+      if (e.data.type === 'CSS') {
+        const styleTag = document.createElement('style');
+        styleTag.id = 'searchText';
+        styleTag.innerText = e.data.style;
+        document.head.appendChild(styleTag);
+      }
+    };
   }
 };
 

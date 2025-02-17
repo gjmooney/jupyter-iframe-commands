@@ -5,25 +5,41 @@ import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 interface IProps {
   onBridgeReady: (value: boolean) => void;
 }
+
 const JupyterIframe = forwardRef(({ onBridgeReady }: IProps, ref) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const bridgeRef = useRef<ICommandBridgeRemote>(null);
 
   useEffect(() => {
-    // ! This works in lite but not lab
-    // window.document.addEventListener('myCustomEvent', handleEvent, false);
-    // function handleEvent(e: any) {
-    //   console.log(e.detail); // outputs: {foo: 'bar'}
-    //   fetchCommands();
-    // }
+    // from MDN
+    const getAllCss = [...document.styleSheets]
+      .map(styleSheet => {
+        try {
+          return [...styleSheet.cssRules].map(rule => rule.cssText).join('');
+        } catch (e) {
+          console.log(
+            'Access to stylesheet %s is denied. Ignoring…',
+            styleSheet.href
+          );
+        }
+      })
+      .filter(Boolean)
+      .join('\n');
 
-    // ! Works in both but idk
     window.onmessage = async e => {
       if (e.data === 'extension-loaded') {
-        // alert('loaded');
-
         bridgeRef.current = createBridge({ iframeId: 'jupyterlab' });
         onBridgeReady(true);
+
+        // Example of getting style from host page
+        iframeRef.current?.contentWindow?.postMessage(
+          {
+            // To differentiate from comlink messages
+            type: 'CSS',
+            style: getAllCss
+          },
+          import.meta.env.VITE_DEMO_SRC
+        );
       }
     };
   }, []);

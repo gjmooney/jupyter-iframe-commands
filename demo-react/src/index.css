@@ -258,3 +258,17 @@ dialog button[value='close']:hover {
   font-weight: 500;
   user-select: none;
 }
+
+.lm-TabBar-tabLabel {
+  background-color: #2980b9;
+  font-size: 125px;
+}
+
+.jp-Launcher-body,
+.jp-WindowedPanel-outer {
+  background-color: rgb(110, 49, 49) !important;
+}
+
+.jp-MarkdownOutput {
+  background-color: rebeccapurple;
+}
