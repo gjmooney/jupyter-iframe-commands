@@ -12,21 +12,34 @@ const JupyterIframe = forwardRef(
     const iframeRef = useRef<HTMLIFrameElement>(null);
     const bridgeRef = useRef<ICommandBridgeRemote>(null);
 
+    const exportCss = () => {
+      const command = 'jupyter-import-css';
+      // from MDN
+      const getAllCss = [...document.styleSheets]
+        .map(styleSheet => {
+          try {
+            return [...styleSheet.cssRules].map(rule => rule.cssText).join('');
+          } catch (e) {
+            console.log(
+              'Access to stylesheet %s is denied. Ignoring…',
+              styleSheet.href
+            );
+          }
+        })
+        .filter(Boolean)
+        .join('\n');
+
+      const parsedCSS = getAllCss.replace(/'/g, '"');
+
+      bridgeRef.current?.execute(command, { parsedCSS });
+    };
+
     useEffect(() => {
       window.onmessage = async e => {
         if (e.data === 'extension-loaded') {
           bridgeRef.current = createBridge({ iframeId: 'jupyterlab' });
           onBridgeReady(true);
-
-          // Example of getting style from host page
-          // iframeRef.current?.contentWindow?.postMessage(
-          //   {
-          //     // To differentiate from comlink messages
-          //     type: 'CSS',
-          //     style: getAllCss
-          //   },
-          //   iframeSrc
-          // );
+          exportCss();
         }
       };
     }, []);

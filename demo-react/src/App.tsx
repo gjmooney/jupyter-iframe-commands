@@ -1,6 +1,5 @@
 import { ICommandBridgeRemote } from 'jupyter-iframe-commands';
 import { useCallback, useRef, useState } from 'react';
-import CssLoader from './components/CssLoader';
 import ErrorDialog from './components/Error';
 import InputArea from './components/InputArea';
 import Instructions from './components/Instructions';
@@ -41,7 +40,7 @@ function App() {
             bridge={getBridge} //can pass bridge itself
             apiFunction={getBridge()?.listCommands} // can pass function from bridge
           />
-          <CssLoader submitCommand={submitCommand} />
+          {/* <CssLoader submitCommand={submitCommand} /> */}
           <ModeToggle />
         </div>
         <InputArea submitCommand={submitCommand} />
