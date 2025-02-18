@@ -6629,6 +6629,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jupyter-css-loader@workspace:packages/css-extension":
+  version: 0.0.0-use.local
+  resolution: "jupyter-css-loader@workspace:packages/css-extension"
+  dependencies:
+    "@jupyterlab/application": ^4.3.2
+    "@jupyterlab/builder": ^4.3.2
+    "@jupyterlab/settingregistry": ^4.3.2
+    "@lumino/coreutils": ^2.2.0
+  languageName: unknown
+  linkType: soft
+
 "jupyter-iframe-commands-demo@workspace:demo":
   version: 0.0.0-use.local
   resolution: "jupyter-iframe-commands-demo@workspace:demo"

@@ -13,35 +13,20 @@ const JupyterIframe = forwardRef(
     const bridgeRef = useRef<ICommandBridgeRemote>(null);
 
     useEffect(() => {
-      // from MDN
-      const getAllCss = [...document.styleSheets]
-        .map(styleSheet => {
-          try {
-            return [...styleSheet.cssRules].map(rule => rule.cssText).join('');
-          } catch (e) {
-            console.log(
-              'Access to stylesheet %s is denied. Ignoring…',
-              styleSheet.href
-            );
-          }
-        })
-        .filter(Boolean)
-        .join('\n');
-
       window.onmessage = async e => {
         if (e.data === 'extension-loaded') {
           bridgeRef.current = createBridge({ iframeId: 'jupyterlab' });
           onBridgeReady(true);
 
           // Example of getting style from host page
-          iframeRef.current?.contentWindow?.postMessage(
-            {
-              // To differentiate from comlink messages
-              type: 'CSS',
-              style: getAllCss
-            },
-            iframeSrc
-          );
+          // iframeRef.current?.contentWindow?.postMessage(
+          //   {
+          //     // To differentiate from comlink messages
+          //     type: 'CSS',
+          //     style: getAllCss
+          //   },
+          //   iframeSrc
+          // );
         }
       };
     }, []);

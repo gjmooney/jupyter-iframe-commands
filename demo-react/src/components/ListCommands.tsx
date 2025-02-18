@@ -18,6 +18,8 @@ const ListCommands = ({ bridge, apiFunction }: IListCommandsProps) => {
 
     const fromFunction = await apiFunction();
     console.log('fromFunction', fromFunction);
+    const res = fromFunction.includes('jupyter-import-css');
+    console.log('res', res);
     if (dialogRef.current) {
       dialogRef.current.showModal();
     }
