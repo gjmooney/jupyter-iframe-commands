@@ -16,10 +16,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     commands.addCommand('jupyter-import-css', {
       execute: args => {
-        console.log('args', args);
-        console.log("args['parsedCSS']", args['parsedCSS']);
-        console.log('args string', JSON.stringify(args));
-        // const { style } = args;
         const styleTag = document.createElement('style');
         styleTag.id = 'searchText';
 
