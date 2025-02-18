@@ -57,16 +57,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     //TODO targetOrigin should be host page
     window.parent?.postMessage('extension-loaded', '*');
-
-    // Add host css to Jupyter
-    window.onmessage = e => {
-      if (e.data.type === 'CSS') {
-        const styleTag = document.createElement('style');
-        styleTag.id = 'searchText';
-        styleTag.innerText = e.data.style;
-        document.head.appendChild(styleTag);
-      }
-    };
   }
 };
 
