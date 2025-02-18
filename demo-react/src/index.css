@@ -282,3 +282,7 @@ dialog button[value='close']:hover {
   border-radius: 0.5rem;
   border: 1px solid #cfd6de;
 }
+
+#menu-panel-wrapper {
+  visibility: hidden;
+}
