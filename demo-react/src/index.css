@@ -270,5 +270,15 @@ dialog button[value='close']:hover {
 }
 
 .jp-MarkdownOutput {
-  background-color: rebeccapurple;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  background-color: #fdfafc;
+  text-shadow: none;
+}
+
+.jp-InputArea-editor {
+  background-color: #fdfafc;
+  border-radius: 0.5rem;
+  border: 1px solid #cfd6de;
 }
