@@ -84,7 +84,7 @@ input[type='text']:focus {
   color: inherit;
 }
 
-button {
+.demo-button {
   padding: 0.75rem 1.5rem;
   background-color: var(--primary-color);
   color: white;
@@ -325,9 +325,14 @@ body[data-notebook='notebooks'] .jp-WindowedPanel-viewport {
 }
 
 .jp-NotebookPanel-toolbar {
-  border-bottom: 2px solid #e0e0e0;
+  /* border-bottom: 2px solid #e0e0e0;
   padding: calc(calc(100% - var(--jp-notebook-max-width)) * 0.5);
-  height: 64px !important;
+  height: 64px !important; */
+  display: none;
+}
+
+.jp-NotebookPanel-notebook {
+  top: 0 !important;
 }
 
 .jp-Notebook .jp-Cell.jp-mod-active .jp-Collapser {

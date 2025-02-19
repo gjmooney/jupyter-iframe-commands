@@ -20,7 +20,11 @@ const ErrorDialog = forwardRef(({ message }: IErrorProps, ref) => {
           <code>{message}</code>
         </div>
         <div className="dialog-buttons">
-          <button value="close" onClick={() => dialogRef.current?.close()}>
+          <button
+            className="demo-button"
+            value="close"
+            onClick={() => dialogRef.current?.close()}
+          >
             Close
           </button>
         </div>

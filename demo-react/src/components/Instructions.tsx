@@ -31,6 +31,7 @@ const Instructions = ({ submitCommand }: IIinstructionProps) => {
       <button
         id="instructions"
         aria-label="Show instructions"
+        className="demo-button"
         onClick={() => {
           dialogRef.current?.showModal();
         }}
@@ -146,6 +147,7 @@ const Instructions = ({ submitCommand }: IIinstructionProps) => {
           </div>
           <div className="dialog-buttons">
             <button
+              className="demo-button"
               value="cancel"
               onClick={() => {
                 dialogRef.current?.close();
@@ -154,6 +156,7 @@ const Instructions = ({ submitCommand }: IIinstructionProps) => {
               Cancel
             </button>
             <button
+              className="demo-button"
               value="default"
               id="command-select-submit"
               onClick={handleSubmit}

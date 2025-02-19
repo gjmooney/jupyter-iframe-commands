@@ -27,7 +27,9 @@ const CssLoader = ({ submitCommand }: ICssLoaderProps) => {
 
   return (
     <div>
-      <button onClick={handleSubmit}>Load CSS</button>
+      <button className="demo-button" onClick={handleSubmit}>
+        Load CSS
+      </button>
     </div>
   );
 };

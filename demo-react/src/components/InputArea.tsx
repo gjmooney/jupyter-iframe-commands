@@ -39,7 +39,7 @@ const InputArea = ({ submitCommand }: IInputAreaProps) => {
           }}
           value={args}
         />
-        <button type="submit" onClick={submit}>
+        <button className="demo-button" type="submit" onClick={submit}>
           Submit Command
         </button>
       </form>

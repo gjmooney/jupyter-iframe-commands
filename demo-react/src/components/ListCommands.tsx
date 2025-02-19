@@ -37,6 +37,7 @@ const ListCommands = ({ bridge, apiFunction }: IListCommandsProps) => {
     <div>
       <button
         id="list-commands"
+        className="demo-button"
         aria-label="Show available commands"
         onClick={handleOpenDialog}
       >
@@ -51,7 +52,11 @@ const ListCommands = ({ bridge, apiFunction }: IListCommandsProps) => {
           })}
         </div>
         <div className="dialog-buttons">
-          <button value="close" onClick={handleCloseDialog}>
+          <button
+            className="demo-button"
+            value="close"
+            onClick={handleCloseDialog}
+          >
             Close
           </button>
         </div>
