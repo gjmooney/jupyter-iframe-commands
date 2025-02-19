@@ -59,7 +59,6 @@ const JupyterIframe = forwardRef(
           sandbox="allow-scripts allow-same-origin"
           title="JupyterLab Instance"
           loading="lazy"
-          style={{ margin: '0 1rem' }}
         ></iframe>
       </>
     );

@@ -269,30 +269,29 @@ dialog button[value='close']:hover {
   background-color: rgb(110, 49, 49) !important;
 } */
 
-.jp-MarkdownOutput {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  background-color: #fdfafc;
-  text-shadow: none;
-}
-
-.jp-InputArea-editor {
-  background-color: #fdfafc;
-  border-radius: 0.5rem;
-  border: 1px solid #cfd6de;
-}
-
 #menu-panel-wrapper {
   display: none;
 }
 
 #main-panel {
   top: unset !important;
+  box-shadow: #2980b9;
 }
 #main-split-panel {
   border-radius: 0.5rem;
-  border: 1px solid #e0e0e0;
+  /* border: 1px solid #e0e0e0; */
+}
+
+.iframe-container {
+  border: 1px solid #d4d4d4;
+  margin: 0 1rem;
+  border-radius: 8px;
+}
+
+.jp-InputArea-editor {
+  background-color: #fdfafc;
+  border-radius: 0.5rem;
+  border: 1px solid #cfd6de;
 }
 
 .jp-mod-selected .jp-MarkdownOutput,
@@ -305,6 +304,11 @@ dialog button[value='close']:hover {
   border-radius: 0.5rem;
   border: 1px solid #e0e0e0;
   padding: 0 0.3rem;
+  /* border: 0; */
+  margin: 0;
+  /* padding: 0; */
+  background-color: #fdfafc;
+  text-shadow: none;
 }
 
 .jp-Notebook.jp-mod-commandMode .jp-Cell.jp-mod-active:focus-visible {
