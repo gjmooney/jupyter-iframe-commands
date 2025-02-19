@@ -1,105 +1,132 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { ICommandBridgeRemote } from 'jupyter-iframe-commands';
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import plusUrl from '../../../icons/keyboard.svg';
 
-const AvailableCommands = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<string>('');
+interface IAvailableCommandsProps {
+  items?: string[];
+  bridge: () => ICommandBridgeRemote;
+}
+
+// type CommandOption = { label: string; command: string };
+const commandList = [
+  { label: 'Create new notebook...', command: 'notebook:create-new' },
+  { label: 'Open terminal...', command: 'terminal:create-new' },
+  { label: 'Undo last operation', command: 'notebook:undo' },
+  { label: 'Redo last operation...', command: 'notebook:redo' },
+  { label: 'Run selected cell', command: 'notebook:run-cell-and-select-next' },
+  { label: 'Run all blocks', command: 'notebook:run-all-cells' },
+  { label: 'Restart Kernel', command: 'notebook:restart-kernel' },
+  {
+    label: 'Restart kernel and clear all outputs',
+    command: 'notebook:restart-clear-output'
+  },
+  { label: 'Add code block below', command: 'notebook:insert-cell-below' },
+  { label: 'Add code block above', command: 'notebook:insert-cell-above' }
+];
+
+const AvailableCommands = ({ bridge }: IAvailableCommandsProps) => {
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  //   const [availableCommands, setAvailableCommands] =
+  //     useState<CommandOption[]>(commandList);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const options: string[] = ['New', 'Open', 'Save'];
-
   // Toggle dropdown visibility
-  const toggleDropdown = useCallback((): void => {
-    setIsDropdownOpen(prev => !prev);
+  const toggleMenu = useCallback(async (): Promise<void> => {
+    setIsMenuOpen(prev => !prev);
+
+    // ? Fetch available commands
+    // const list = await bridge().listCommands();
+    // setAvailableCommands(list.sort());
   }, []);
 
-  // Handle selection of an option
+  // Handle option click
   const handleOptionClick = useCallback((option: string): void => {
-    setSelectedOption(option);
     console.log(`${option} option clicked`);
-    setIsDropdownOpen(false);
+    setIsMenuOpen(false);
+    setSearchQuery(''); // Reset search query after selection
+    bridge().execute(option, {});
   }, []);
 
-  // Close dropdown if clicking outside the container
+  // Update the search query as the user types
+  const handleSearchChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>): void => {
+      setSearchQuery(e.target.value);
+    },
+    []
+  );
+
+  // Close the dropdown when clicking outside of the component
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent): void => {
       if (
         containerRef.current &&
         !containerRef.current.contains(event.target as Node)
       ) {
-        setIsDropdownOpen(false);
+        setIsMenuOpen(false);
       }
     };
 
-    if (isDropdownOpen) {
+    if (isMenuOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isDropdownOpen]);
+  }, [isMenuOpen]);
+
+  // Filter items based on the search query
+  const filteredItems = commandList.filter(item =>
+    item.label.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div
       ref={containerRef}
-      style={{
-        position: 'relative',
-        display: 'inline-block',
-        width: '200px'
-      }}
+      style={{ position: 'relative', display: 'inline-block' }}
     >
-      <div
-        onClick={toggleDropdown}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          border: '1px solid #ccc',
-          padding: '8px',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          backgroundColor: '#fff'
-        }}
-      >
-        <input
-          type="text"
-          value={selectedOption}
-          onChange={e => setSelectedOption(e.target.value)}
-          placeholder="Select an option"
-          style={{
-            flex: 1,
-            border: 'none',
-            outline: 'none',
-            cursor: 'pointer'
-          }}
-          readOnly
-        />
-        <span style={{ marginLeft: '8px' }}>&#9660;</span>
-      </div>
-
-      {isDropdownOpen && (
+      <button onClick={toggleMenu}>
+        {' '}
+        <img src={plusUrl} />
+      </button>
+      {isMenuOpen && (
         <div
           style={{
             position: 'absolute',
-            top: 'calc(100% + 4px)',
+            top: '100%',
             left: 0,
-            width: '100%',
             backgroundColor: '#fff',
             border: '1px solid #ccc',
-            borderRadius: '4px',
+            padding: '8px',
+            marginTop: '4px',
             boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
-            zIndex: 1000
+            zIndex: 1000,
+            width: '320px',
+            borderRadius: 8
           }}
         >
-          {options.map(option => (
+          {/* Search bar */}
+          <input
+            type="text"
+            placeholder="Type to search available commands"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            style={{
+              width: '100%',
+              padding: '4px',
+              marginBottom: '8px',
+              boxSizing: 'border-box'
+            }}
+          />
+          {/* Render filtered options */}
+          {filteredItems.map(option => (
             <div
-              key={option}
-              style={{
-                padding: '8px',
-                cursor: 'pointer'
-              }}
-              onClick={() => handleOptionClick(option)}
+              key={option.command}
+              style={{ padding: '8px 12px', cursor: 'pointer' }}
+              onClick={() => handleOptionClick(option.command)}
             >
-              {option}
+              {option.label}
             </div>
           ))}
         </div>

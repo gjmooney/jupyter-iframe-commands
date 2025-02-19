@@ -1,12 +1,25 @@
+import { ICommandBridgeRemote } from 'jupyter-iframe-commands';
+import clipboardUrl from '../../../icons/clipboard.svg';
+import redoUrl from '../../../icons/redo.svg';
+import saveUrl from '../../../icons/save.svg';
+import undoUrl from '../../../icons/undo.svg';
 import AddCellButton from './AddCellButton';
 import AvailableCommands from './AvailableCommands';
 import './fileMenuBar.css';
-
 interface IFileMenuBarProps {
+  bridge: () => ICommandBridgeRemote;
   submitCommand: (command: string, args: string) => void;
 }
 
-const FileMenuBar = ({ submitCommand }: IFileMenuBarProps) => {
+const FileMenuBar = ({ bridge, submitCommand }: IFileMenuBarProps) => {
+  // useEffect(() => {
+  //   const list = async () => {
+  //     const commands = await bridge().listCommands();
+  //     console.log('commands', commands);
+  //   };
+  //   list();
+  // }, [bridge]);
+
   const handleSave = () => {
     console.log('saving');
     submitCommand('docmanager:save', '');
@@ -26,11 +39,19 @@ const FileMenuBar = ({ submitCommand }: IFileMenuBarProps) => {
     <div className="file-menu-bar-container">
       <div className="file-menu-bar-commands">
         <AddCellButton submitCommand={submitCommand} />
-        <button onClick={handleSave}>save</button>
-        <button onClick={handleUndo}>undo</button>
-        <button onClick={handleRedo}>redo</button>
-        <button>paste</button>
-        <AvailableCommands />
+        <button onClick={handleSave}>
+          <img src={saveUrl} />
+        </button>
+        <button onClick={handleUndo}>
+          <img src={undoUrl} />
+        </button>
+        <button onClick={handleRedo}>
+          <img src={redoUrl} />
+        </button>
+        <button>
+          <img src={clipboardUrl} />
+        </button>
+        <AvailableCommands bridge={bridge} />
       </div>
 
       <div className="file-menu-bar-buttons">

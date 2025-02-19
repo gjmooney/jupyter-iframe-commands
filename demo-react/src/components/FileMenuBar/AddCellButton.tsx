@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import plusUrl from '../../../icons/plus.svg';
 
 interface IAddCellButtonProps {
   submitCommand: (command: string, args: string) => void;
@@ -48,7 +49,9 @@ const AddCellButton = ({ submitCommand }: IAddCellButtonProps) => {
       ref={containerRef}
       style={{ position: 'relative', display: 'inline-block' }}
     >
-      <button onClick={toggleMenu}>+</button>
+      <button onClick={toggleMenu}>
+        <img src={plusUrl} />
+      </button>
       {isMenuOpen && (
         <div className="file-menu-popover">
           <div

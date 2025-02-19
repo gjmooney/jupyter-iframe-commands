@@ -1,6 +1,7 @@
 import { ICommandBridgeRemote } from 'jupyter-iframe-commands';
 import { useCallback, useRef, useState } from 'react';
 import ErrorDialog from './components/Error';
+import FileMenuBar from './components/FileMenuBar/FileMenuBar';
 import InputArea from './components/InputArea';
 import Instructions from './components/Instructions';
 import JupyterIframe from './components/JupyterIframe';
@@ -45,6 +46,7 @@ function App() {
         </div>
         <InputArea submitCommand={submitCommand} />
       </div>
+      <FileMenuBar bridge={getBridge} submitCommand={submitCommand} />
       <JupyterIframe
         ref={iframeRef}
         iframeSrc={import.meta.env.VITE_DEMO_SRC}

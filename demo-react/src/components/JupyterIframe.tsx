@@ -1,7 +1,6 @@
 import { ICommandBridgeRemote } from 'jupyter-iframe-commands';
 import { createBridge } from 'jupyter-iframe-commands-host';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import FileMenuBar from './FileMenuBar/FileMenuBar';
 
 interface IProps {
   iframeSrc: string;
@@ -10,7 +9,7 @@ interface IProps {
 }
 
 const JupyterIframe = forwardRef(
-  ({ iframeSrc, onBridgeReady, submitCommand }: IProps, ref) => {
+  ({ iframeSrc, onBridgeReady }: IProps, ref) => {
     const iframeRef = useRef<HTMLIFrameElement>(null);
     const bridgeRef = useRef<ICommandBridgeRemote>(null);
 
@@ -53,7 +52,6 @@ const JupyterIframe = forwardRef(
 
     return (
       <>
-        <FileMenuBar submitCommand={submitCommand} />
         <iframe
           ref={iframeRef}
           id="jupyterlab"
