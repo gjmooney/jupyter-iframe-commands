@@ -22,7 +22,7 @@ body {
   align-items: center;
   padding: 1.5rem;
   background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
 h1 {
@@ -259,7 +259,7 @@ dialog button[value='close']:hover {
   user-select: none;
 }
 
-.lm-TabBar-tabLabel {
+/* .lm-TabBar-tabLabel {
   background-color: #2980b9;
   font-size: 125px;
 }
@@ -267,7 +267,7 @@ dialog button[value='close']:hover {
 .jp-Launcher-body,
 .jp-WindowedPanel-outer {
   background-color: rgb(110, 49, 49) !important;
-}
+} */
 
 .jp-MarkdownOutput {
   border: 0;
@@ -284,5 +284,52 @@ dialog button[value='close']:hover {
 }
 
 #menu-panel-wrapper {
+  display: none;
+}
+
+#main-panel {
+  top: unset !important;
+}
+#main-split-panel {
+  border-radius: 0.5rem;
+  border: 1px solid #e0e0e0;
+}
+
+.jp-mod-selected .jp-MarkdownOutput,
+.jp-Notebook.jp-mod-editMode .jp-Cell.jp-mod-active .jp-InputArea-editor {
+  background-color: #f5f5f5;
+  border: 1px solid #d4d4d4;
+}
+
+.jp-MarkdownOutput {
+  border-radius: 0.5rem;
+  border: 1px solid #e0e0e0;
+  padding: 0 0.3rem;
+}
+
+.jp-Notebook.jp-mod-commandMode .jp-Cell.jp-mod-active:focus-visible {
+  box-shadow: unset;
+}
+
+.lm-SplitPanel-child {
+  background-color: #ffffff;
+}
+
+.jp-WindowedPanel-outer {
+  background-color: #ffffff !important;
+  padding: 0;
+}
+
+body[data-notebook='notebooks'] .jp-WindowedPanel-viewport {
+  box-shadow: none;
+}
+
+.jp-NotebookPanel-toolbar {
+  border-bottom: 2px solid #e0e0e0;
+  padding: calc(calc(100% - var(--jp-notebook-max-width)) * 0.5);
+  height: 64px !important;
+}
+
+.jp-Notebook .jp-Cell.jp-mod-active .jp-Collapser {
   visibility: hidden;
 }

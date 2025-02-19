@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
 const ModeToggle = () => {
-  const [mode, setMode] = useState('lab');
+  const [mode, setMode] = useState('notebook');
 
   useEffect(() => {
     const iframe = document.getElementById('jupyterlab') as HTMLIFrameElement;
