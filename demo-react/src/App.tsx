@@ -49,6 +49,7 @@ function App() {
         ref={iframeRef}
         iframeSrc={import.meta.env.VITE_DEMO_SRC}
         onBridgeReady={setIsBridgeReady}
+        submitCommand={submitCommand}
       />
       <ErrorDialog ref={dialogRef} message={errorMessage} />
     </>
