@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import codeUrl from '../../../icons/code.svg';
+import markdownUrl from '../../../icons/markdown.svg';
 import plusUrl from '../../../icons/plus.svg';
+import PopoverListItem from './PopoverListItem';
 
 interface IAddCellButtonProps {
   submitCommand: (command: string, args: string) => void;
@@ -52,25 +55,22 @@ const AddCellButton = ({ submitCommand }: IAddCellButtonProps) => {
       <button onClick={toggleMenu}>
         <img src={plusUrl} />
       </button>
+
       {isMenuOpen && (
         <div className="file-menu-popover">
-          <div
-            style={{ padding: '8px 12px', cursor: 'pointer' }}
-            onClick={() => handleOptionClick('code')}
-          >
-            <div className="file-menu-button-text">
-              <label>Code</label>
-              <span>Insert an executable code cell</span>
-            </div>
-          </div>
-          <div
-            style={{ padding: '8px 12px', cursor: 'pointer' }}
-            onClick={() => handleOptionClick('markdown')}
-          >
-            <div className="file-menu-button-text">
-              <label>Markdown</label>
-              <span>Insert a markdown cell</span>
-            </div>
+          <div className="file-menu-popover-2">
+            <PopoverListItem
+              label="Code"
+              content="Insert an executable code cell"
+              iconUrl={codeUrl}
+              handleOptionClick={handleOptionClick}
+            />
+            <PopoverListItem
+              label="Markdown"
+              content="Insert a markdown cell"
+              iconUrl={markdownUrl}
+              handleOptionClick={handleOptionClick}
+            />
           </div>
         </div>
       )}

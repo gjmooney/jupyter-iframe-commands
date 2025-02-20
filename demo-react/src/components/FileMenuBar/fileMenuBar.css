@@ -92,6 +92,7 @@
 
   border: 1px solid transparent;
   background-color: #ffffff;
+  cursor: pointer;
 
   /* Inside auto layout */
   flex: none;
@@ -118,7 +119,7 @@
   gap: 1rem;
 }
 
-.file-menu-button-text {
+/* .file-menu-button-text {
   display: flex;
   flex-direction: column;
 }
@@ -130,10 +131,10 @@
 .file-menu-button-text > span {
   font-size: 13px;
   color: #737373;
-}
+} */
 
 .file-menu-popover {
-  position: absolute;
+  /* position: absolute;
   top: 100%;
   left: 0;
   margin-top: 4px;
@@ -143,5 +144,155 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-width: 150px;
   z-index: 1000;
-  text-wrap: nowrap;
+  text-wrap: nowrap; */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+
+  position: absolute;
+  width: 246px;
+  height: 124px;
+  /* left: 18px; */
+  top: 35px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 2;
+  flex-grow: 0;
+  z-index: 2;
+}
+
+.file-menu-popover-2 {
+  box-sizing: border-box;
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  gap: 8px;
+
+  width: 246px;
+  height: 124px;
+
+  background: #ffffff;
+  /* shadow/400 */
+  box-shadow: 0px 5px 16px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.popover-list-item {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0 12px;
+  gap: 6px;
+
+  width: 226px;
+  height: 48px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.popover-list-item:first-child {
+  padding-top: 8px;
+}
+
+.popover-list-item:last-child {
+  padding-bottom: 8px;
+}
+
+.popover-icon {
+  width: 16px;
+  height: 16px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.popover-icon svg {
+  background: #000000;
+}
+
+.popover-text {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 2px;
+  cursor: pointer;
+
+  width: 180px;
+  height: 32px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 2;
+  flex-grow: 1;
+}
+.popover-text > label {
+  width: 180px;
+  height: 16px;
+  cursor: pointer;
+
+  /* body/md/500 */
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 16px;
+  /* identical to box height, or 123% */
+  display: flex;
+  align-items: center;
+
+  color: #262626;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+.popover-text > span {
+  width: 180px;
+  height: 14px;
+
+  /* body/xs/500 */
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 14px;
+  /* identical to box height, or 127% */
+  display: flex;
+  align-items: center;
+
+  color: #737373;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
 }

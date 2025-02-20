@@ -35,6 +35,10 @@ const FileMenuBar = ({ bridge, submitCommand }: IFileMenuBarProps) => {
     submitCommand('notebook:redo-cell-action', '');
   };
 
+  const handlePaste = () => {
+    submitCommand('notebook:paste-cell-below', '');
+  };
+
   return (
     <div className="file-menu-bar-container">
       <div className="frame-29302">
@@ -51,7 +55,7 @@ const FileMenuBar = ({ bridge, submitCommand }: IFileMenuBarProps) => {
           <button onClick={handleRedo}>
             <img src={redoUrl} />
           </button>
-          <button>
+          <button onClick={handlePaste}>
             <img src={clipboardUrl} />
           </button>
           <AvailableCommands bridge={bridge} />

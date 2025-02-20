@@ -87,7 +87,6 @@ const AvailableCommands = ({ bridge }: IAvailableCommandsProps) => {
       style={{ position: 'relative', display: 'inline-block' }}
     >
       <button onClick={toggleMenu}>
-        {' '}
         <img src={plusUrl} />
       </button>
       {isMenuOpen && (
