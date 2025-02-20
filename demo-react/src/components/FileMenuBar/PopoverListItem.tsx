@@ -1,6 +1,6 @@
 interface IPopoverListItemProps {
   label: string;
-  content: string;
+  content?: string;
   iconUrl: string;
   handleOptionClick: (option: string) => void;
 }

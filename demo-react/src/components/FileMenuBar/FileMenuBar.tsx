@@ -5,6 +5,7 @@ import saveUrl from '../../../icons/save.svg';
 import undoUrl from '../../../icons/undo.svg';
 import AddCellButton from './AddCellButton';
 import AvailableCommands from './AvailableCommands';
+import RunButton from './RunButton';
 import './fileMenuBar.css';
 interface IFileMenuBarProps {
   bridge: () => ICommandBridgeRemote;
@@ -50,19 +51,25 @@ const FileMenuBar = ({ bridge, submitCommand }: IFileMenuBarProps) => {
             </div>
           </button>
           <button onClick={handleUndo}>
-            <img src={undoUrl} />
+            <div className="button-name">
+              <img src={undoUrl} />
+            </div>
           </button>
           <button onClick={handleRedo}>
-            <img src={redoUrl} />
+            <div className="button-name">
+              <img src={redoUrl} />
+            </div>
           </button>
           <button onClick={handlePaste}>
-            <img src={clipboardUrl} />
+            <div className="button-name">
+              <img src={clipboardUrl} />
+            </div>
           </button>
           <AvailableCommands bridge={bridge} />
         </div>
 
         <div className="file-menu-bar-buttons">
-          <button>run</button>
+          <RunButton submitCommand={submitCommand} />
           <button>kernel</button>
         </div>
       </div>
