@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback } from 'react';
 import arrowDownUrl from '../../../icons/arrowDown.svg';
 import playUrl from '../../../icons/play.svg';
+import { usePopover } from './usePopover';
 
 interface IRunButtonProps {
   submitCommand: (command: string, args: string) => void;
@@ -19,46 +20,18 @@ const popoverOptions = [
   }
 ];
 const RunButton = ({ submitCommand }: IRunButtonProps) => {
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  // Toggle the popover menu on right half click
-  const togglePopover = useCallback(() => {
-    setIsPopoverOpen(prev => !prev);
-  }, []);
-
-  // Close popover when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
-        setIsPopoverOpen(false);
-      }
-    };
-
-    if (isPopoverOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isPopoverOpen]);
+  const { isOpen, toggle, close, ref } = usePopover();
 
   const handleOptionClick = useCallback((option: string): void => {
     console.log(`${option} option clicked`);
-    setIsPopoverOpen(false);
+    close();
     submitCommand(option, '');
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      style={{ display: 'inline-flex', position: 'relative' }}
-    >
+    <div ref={ref} style={{ display: 'inline-flex', position: 'relative' }}>
       <div className="buttons-grouped">
-        {/* Left Button */}
+        {/* Run Button */}
         <button
           onClick={() => handleOptionClick('notebook:run-all-cells')}
           className="left-half"
@@ -69,8 +42,8 @@ const RunButton = ({ submitCommand }: IRunButtonProps) => {
           <span>Run</span>
         </button>
 
-        {/* Right Button */}
-        <button onClick={togglePopover} className="right-half">
+        {/* Options Button */}
+        <button onClick={toggle} className="right-half">
           <div className="button-name">
             <img src={arrowDownUrl} />
           </div>
@@ -78,7 +51,7 @@ const RunButton = ({ submitCommand }: IRunButtonProps) => {
       </div>
 
       {/* Popover Menu */}
-      {isPopoverOpen && (
+      {isOpen && (
         <div
           className="available-commands-popover"
           style={{ left: 'unset', right: '0', alignItems: 'flex-end' }}
@@ -89,7 +62,6 @@ const RunButton = ({ submitCommand }: IRunButtonProps) => {
                 key={index}
                 onClick={() => {
                   handleOptionClick(option.command);
-                  setIsPopoverOpen(false);
                 }}
                 className="popover-list-item"
               >
