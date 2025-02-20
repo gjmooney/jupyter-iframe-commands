@@ -196,14 +196,15 @@ dialog button[value='close']:hover {
 
 /* Responsive iframe */
 #jupyterlab {
-  width: calc(100% - 0.5vw);
+  width: calc(100%);
+  /* width: calc(100% - 0.5vw); */
   height: calc(100vh - 200px);
   border: none;
-  border-radius: 8px;
-  margin-top: 0.25vw;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  align-self: center;
+  /* border-radius: 8px; */
+  /* margin-top: 0.25vw; */
+  /* background-color: white; */
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  /* align-self: center; */
 }
 
 .mode-toggle {
@@ -277,15 +278,31 @@ dialog button[value='close']:hover {
   top: unset !important;
   box-shadow: #2980b9;
 }
-#main-split-panel {
-  border-radius: 0.5rem;
-  /* border: 1px solid #e0e0e0; */
-}
 
 .iframe-container {
-  border: 1px solid #d4d4d4;
+  /* border: 1px solid #d4d4d4;
   margin: 0 1rem;
+  border-radius: 8px; */
+  box-sizing: border-box;
+  margin: 0 1rem;
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+
+  /* width: 1168px; */
+  /* height: 880px; */
+
+  border: 1px solid #ededed;
   border-radius: 8px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 1;
 }
 
 .jp-InputArea-editor {
