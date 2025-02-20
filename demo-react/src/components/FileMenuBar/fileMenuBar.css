@@ -1,25 +1,116 @@
 .file-menu-bar-container {
-  display: flex;
+  /* display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #ededed;
   background-color: #ffffff;
   padding: 6px;
   height: 32px;
   border-radius: 8px 8px 0 0;
-  gap: 8px;
+  gap: 8px; */
+  border-radius: 8px 8px 0 0;
+
+  box-sizing: border-box;
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 6px;
+
+  /* width: auto; */
+  height: 44px;
+
+  background: #ffffff;
+  border-bottom: 1px solid #ededed;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
 }
 
-.file-menu-bar-container button {
-  width: 32px;
+.frame-29302 {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: flex-start;
+  padding: 0px;
+  gap: 8px;
+
+  /* width: auto; */
   height: 32px;
-  padding: 6px;
-  border: 1px solid transparent;
-  background-color: #ffffff;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 1;
 }
 
 .file-menu-bar-commands {
+  /* display: flex;
+  gap: 1rem; */
+
+  /* Auto layout */
   display: flex;
-  gap: 1rem;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 8px;
+
+  /* width: 232px; */
+  height: 32px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.file-menu-bar-commands button {
+  /* width: 32px;
+  height: 32px;
+  padding: 6px;
+  border: 1px solid transparent;
+  background-color: #ffffff; */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  gap: 8px;
+
+  width: 32px;
+  height: 32px;
+
+  border-radius: 6px;
+
+  border: 1px solid transparent;
+  background-color: #ffffff;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.button-name {
+  width: 16px;
+  height: 16px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.button-name svg {
+  stroke: #525252;
 }
 
 .file-menu-bar-buttons {

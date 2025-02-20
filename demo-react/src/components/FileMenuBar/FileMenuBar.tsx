@@ -37,26 +37,30 @@ const FileMenuBar = ({ bridge, submitCommand }: IFileMenuBarProps) => {
 
   return (
     <div className="file-menu-bar-container">
-      <div className="file-menu-bar-commands">
-        <AddCellButton submitCommand={submitCommand} />
-        <button onClick={handleSave}>
-          <img src={saveUrl} />
-        </button>
-        <button onClick={handleUndo}>
-          <img src={undoUrl} />
-        </button>
-        <button onClick={handleRedo}>
-          <img src={redoUrl} />
-        </button>
-        <button>
-          <img src={clipboardUrl} />
-        </button>
-        <AvailableCommands bridge={bridge} />
-      </div>
+      <div className="frame-29302">
+        <div className="file-menu-bar-commands">
+          <AddCellButton submitCommand={submitCommand} />
+          <button onClick={handleSave}>
+            <div className="button-name">
+              <img src={saveUrl} />
+            </div>
+          </button>
+          <button onClick={handleUndo}>
+            <img src={undoUrl} />
+          </button>
+          <button onClick={handleRedo}>
+            <img src={redoUrl} />
+          </button>
+          <button>
+            <img src={clipboardUrl} />
+          </button>
+          <AvailableCommands bridge={bridge} />
+        </div>
 
-      <div className="file-menu-bar-buttons">
-        <button>run</button>
-        <button>kernel</button>
+        <div className="file-menu-bar-buttons">
+          <button>run</button>
+          <button>kernel</button>
+        </div>
       </div>
     </div>
   );
