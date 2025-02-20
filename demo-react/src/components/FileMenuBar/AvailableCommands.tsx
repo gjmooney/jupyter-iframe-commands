@@ -89,45 +89,36 @@ const AvailableCommands = ({ bridge }: IAvailableCommandsProps) => {
       <button onClick={toggleMenu}>
         <img src={plusUrl} />
       </button>
+
       {isMenuOpen && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            backgroundColor: '#fff',
-            border: '1px solid #ccc',
-            padding: '8px',
-            marginTop: '4px',
-            boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
-            zIndex: 1000,
-            width: '320px',
-            borderRadius: 8
-          }}
-        >
-          {/* Search bar */}
-          <input
-            type="text"
-            placeholder="Type to search available commands"
-            value={searchQuery}
-            onChange={handleSearchChange}
-            style={{
-              width: '100%',
-              padding: '4px',
-              marginBottom: '8px',
-              boxSizing: 'border-box'
-            }}
-          />
-          {/* Render filtered options */}
-          {filteredItems.map(option => (
-            <div
-              key={option.command}
-              style={{ padding: '8px 12px', cursor: 'pointer' }}
-              onClick={() => handleOptionClick(option.command)}
-            >
-              {option.label}
+        <div className="available-commands-popover">
+          <div className="filter-pop-overs">
+            <div className="frame-2885">
+              <div className="input-controls">
+                <div className="input-field">
+                  {/* Search bar */}
+                  <input
+                    type="text"
+                    placeholder="Type to search available commands"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                  />
+                </div>
+              </div>
+              {/* Render filtered options */}
+              <div className="list-of-options">
+                {filteredItems.map(option => (
+                  <div
+                    className="popover-list-item"
+                    key={option.command}
+                    onClick={() => handleOptionClick(option.command)}
+                  >
+                    {option.label}
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
+          </div>
         </div>
       )}
     </div>
