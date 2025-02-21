@@ -27,8 +27,8 @@ const AddCellButton = ({ submitCommand }: IAddCellButtonProps) => {
       </button>
 
       {isOpen && (
-        <div className="file-menu-popover">
-          <div className="file-menu-popover-2">
+        <div className="file-menu-popover-container">
+          <div className="file-menu-popover-wrapper">
             <PopoverListItem
               label="Code"
               content="Insert an executable code cell"

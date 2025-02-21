@@ -14,14 +14,6 @@ interface IFileMenuBarProps {
 }
 
 const FileMenuBar = ({ bridge, submitCommand }: IFileMenuBarProps) => {
-  // useEffect(() => {
-  //   const list = async () => {
-  //     const commands = await bridge().listCommands();
-  //     console.log('commands', commands);
-  //   };
-  //   list();
-  // }, [bridge]);
-
   const handleSave = () => {
     console.log('saving');
     submitCommand('docmanager:save', '');
@@ -43,7 +35,7 @@ const FileMenuBar = ({ bridge, submitCommand }: IFileMenuBarProps) => {
 
   return (
     <div className="file-menu-bar-container">
-      <div className="frame-29302">
+      <div className="file-menu-bar-wrapper">
         <div className="file-menu-bar-commands">
           <AddCellButton submitCommand={submitCommand} />
           <button onClick={handleSave}>

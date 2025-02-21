@@ -58,7 +58,7 @@ const AvailableCommands = ({ bridge }: IAvailableCommandsProps) => {
       {isOpen && (
         <div className="available-commands-popover">
           <div className="filter-pop-overs">
-            <div className="frame-2885">
+            <div className="popovers-wrapper">
               <div className="input-controls">
                 <div className="input-field">
                   {/* Search bar */}
