@@ -190,6 +190,22 @@ dialog button[value='close']:hover {
   font-family: monospace;
 }
 
+#notebook-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 0.5rem;
+  margin: -0.5rem 0;
+  font-family: monospace;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#notebook-list button {
+  display: flex;
+  justify-content: center;
+}
+
 #commands-list div {
   padding: 0.25rem 0;
 }

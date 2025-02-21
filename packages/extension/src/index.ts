@@ -6,6 +6,7 @@ import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
+import { INotebookTracker } from '@jupyterlab/notebook';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { ReadonlyPartialJSONObject } from '@lumino/coreutils';
 import { expose, windowEndpoint } from 'comlink';
@@ -19,11 +20,12 @@ const plugin: JupyterFrontEndPlugin<void> = {
   autoStart: true,
   description:
     'A plugin to expose an API for interacting with JupyterLab from a parent page.',
-  requires: [ILabStatus],
+  requires: [ILabStatus, INotebookTracker],
   optional: [ISettingRegistry],
   activate: async (
     app: JupyterFrontEnd,
     labStatus: ILabStatus,
+    tracker: INotebookTracker,
     settingRegistry: ISettingRegistry | null
   ) => {
     console.log('JupyterLab extension jupyter-iframe-commands is activated!');
@@ -48,6 +50,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     const api: ICommandBridgeRemote = {
       async execute(command: string, args: ReadonlyPartialJSONObject) {
+        tracker.forEach(nb => {
+          console.log('nb.content', nb.title.label);
+        });
         await commands.execute(command, args);
       },
       async listCommands() {

@@ -7,6 +7,7 @@ import Instructions from './components/Instructions';
 import JupyterIframe from './components/JupyterIframe';
 import ListCommands from './components/ListCommands';
 import ModeToggle from './components/ModeToggle';
+import NoteBookBrowser from './components/NoteBookBrowser';
 
 function App() {
   const [errorMessage, setErrorMessage] = useState('');
@@ -41,7 +42,7 @@ function App() {
             bridge={getBridge} //can pass bridge itself
             apiFunction={getBridge()?.listCommands} // can pass function from bridge
           />
-          {/* <CssLoader submitCommand={submitCommand} /> */}
+          <NoteBookBrowser />
           <ModeToggle />
         </div>
         <InputArea submitCommand={submitCommand} />
