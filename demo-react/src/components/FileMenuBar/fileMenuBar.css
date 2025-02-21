@@ -115,8 +115,20 @@
 }
 
 .file-menu-bar-buttons {
+  /* Auto layout */
   display: flex;
-  gap: 1rem;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 8px;
+
+  width: 299px;
+  height: 32px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 2;
+  flex-grow: 0;
 }
 
 /* .file-menu-button-text {
@@ -568,4 +580,122 @@
 
 .filter-pop-overs > .popover-list-item {
   height: 32px;
+}
+
+.notebook-extra-actions {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 8px;
+
+  width: 138px;
+  height: 32px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.kernel-info-and-actions {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 4px;
+
+  width: 138px;
+  height: 32px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 1;
+}
+
+.kernel-button {
+  box-sizing: border-box;
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 8px;
+
+  /* width: 138px; */
+  /* height: 32px; */
+
+  border: 1px solid #d4d4d4;
+  border-radius: 6px;
+
+  background-color: #ffffff;
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 1;
+}
+
+.indicator {
+  width: 16px;
+  height: 16px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.indicator.idle rect:first-child {
+  fill: #f2f6f8;
+}
+
+.indicator.idle rect:last-child {
+  fill: #b3c4d8;
+}
+
+.indicator.busy rect:last-child {
+  stroke: red;
+  fill: red;
+}
+
+.kernel-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0px;
+  width: 90px;
+  height: 16px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 1;
+}
+
+.kernel-text > span {
+  width: 90px;
+  height: 16px;
+
+  /* body/md/500 */
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  /* identical to box height, or 123% */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #262626;
+  overflow: hidden;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
 }

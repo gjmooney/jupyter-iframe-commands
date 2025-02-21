@@ -2,6 +2,7 @@
 // Distributed under the terms of the Modified BSD License.
 
 import {
+  ILabStatus,
   JupyterFrontEnd,
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
@@ -18,9 +19,11 @@ const plugin: JupyterFrontEndPlugin<void> = {
   autoStart: true,
   description:
     'A plugin to expose an API for interacting with JupyterLab from a parent page.',
+  requires: [ILabStatus],
   optional: [ISettingRegistry],
   activate: async (
     app: JupyterFrontEnd,
+    labStatus: ILabStatus,
     settingRegistry: ISettingRegistry | null
   ) => {
     console.log('JupyterLab extension jupyter-iframe-commands is activated!');
@@ -48,9 +51,22 @@ const plugin: JupyterFrontEndPlugin<void> = {
         await commands.execute(command, args);
       },
       async listCommands() {
-        return await commands.listCommands();
+        return commands.listCommands();
+      },
+      async getKernelDisplayName() {
+        const kernel = await commands.execute('notebook:get-kernel', {});
+        const spec = await kernel.spec;
+
+        return await spec.display_name;
       }
     };
+
+    labStatus.busySignal.connect(() => {
+      window.parent.postMessage(
+        { id: 'kernel-status', isBusy: labStatus.isBusy },
+        '*'
+      );
+    });
 
     const endpoint = windowEndpoint(self.parent);
     expose(api, endpoint);

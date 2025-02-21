@@ -5,6 +5,7 @@ import saveUrl from '../../../icons/save.svg';
 import undoUrl from '../../../icons/undo.svg';
 import AddCellButton from './AddCellButton';
 import AvailableCommands from './AvailableCommands';
+import KernelInfo from './KernelInfo';
 import RunButton from './RunButton';
 import './fileMenuBar.css';
 interface IFileMenuBarProps {
@@ -70,7 +71,7 @@ const FileMenuBar = ({ bridge, submitCommand }: IFileMenuBarProps) => {
 
         <div className="file-menu-bar-buttons">
           <RunButton submitCommand={submitCommand} />
-          <button>kernel</button>
+          <KernelInfo bridge={bridge} />
         </div>
       </div>
     </div>
