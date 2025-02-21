@@ -31,16 +31,14 @@ const KernelInfo = ({ bridge }: IKernelInfoProps) => {
     }
   }, [bridgeReady]);
 
-  const onClik = async () => {
-    const lll = await bridge().getKernelDisplayName();
-    setKernelName(lll);
-    console.log('lll', lll);
+  const handleClick = async () => {
+    bridge().execute('notebook:change-kernel', {});
   };
 
   return (
     <div className="notebook-extra-actions">
       <div className="kernel-info-and-actions">
-        <button className="kernel-button" onClick={onClik}>
+        <button className="kernel-button" onClick={handleClick}>
           <span className={`indicator ${className}`}>
             <svg
               width="16"

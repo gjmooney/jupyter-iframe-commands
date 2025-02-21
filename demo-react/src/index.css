@@ -98,8 +98,8 @@ input[type='text']:focus {
     transform 0.1s;
 }
 
-button:hover {
-  background-color: var(--primary-hover);
+button {
+  cursor: pointer;
 }
 
 button:active {
@@ -129,7 +129,7 @@ button:active {
 /* Dialog styles */
 dialog {
   padding: 2rem;
-  max-width: 600px;
+  /* max-width: 600px; */
   border: none;
   border-radius: 12px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -346,9 +346,6 @@ body[data-notebook='notebooks'] .jp-WindowedPanel-viewport {
 }
 
 .jp-NotebookPanel-toolbar {
-  /* border-bottom: 2px solid #e0e0e0;
-  padding: calc(calc(100% - var(--jp-notebook-max-width)) * 0.5);
-  height: 64px !important; */
   display: none;
 }
 
