@@ -5,8 +5,8 @@ interface IInputAreaProps {
 }
 
 const InputArea = ({ submitCommand }: IInputAreaProps) => {
-  const [command, setCommand] = useState('apputils:change-theme');
-  const [args, setArgs] = useState('{"theme":"JupyterLab Light"}');
+  const [command, setCommand] = useState('');
+  const [args, setArgs] = useState('');
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();

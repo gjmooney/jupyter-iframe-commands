@@ -12,10 +12,6 @@ const KernelInfo = ({ bridge }: IKernelInfoProps) => {
 
   useEffect(() => {
     window.addEventListener('message', e => {
-      if (e.data === 'extension-loaded') {
-        console.log('check');
-      }
-
       if (e.data.id === 'kernel-status') {
         setClassName(e.data.isBusy ? 'busy' : 'idle');
         setBridgeReady(true);
