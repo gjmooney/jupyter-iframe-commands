@@ -33,17 +33,20 @@ export function exposeApi({ iframeId }: { iframeId: string }) {
   const hostApi = {
     async setReady(val: boolean) {
       // externalStore.value = stat;
-      stateStore = { ...stateStore, isBridgeReady: val };
+      // stateStore = { ...stateStore, isBridgeReady: val };
+      store.setState({ isBridgeReady: val });
       // emitChange();
-      listeners.forEach(listener => listener());
+      // listeners.forEach(listener => listener());
 
-      console.log('stateStore', stateStore);
+      console.log('stateStore', store.getState());
     },
     async kernelStatus(stat: boolean) {
       // externalStore.value = stat;
-      stateStore = { ...stateStore, kernelStatus: stat };
+      // stateStore = { ...stateStore, kernelStatus: stat };
+      store.setState({ kernelStatus: stat });
       // emitChange();
-      listeners.forEach(listener => listener());
+
+      // listeners.forEach(listener => listener());
 
       // console.log('stateStore', stateStore);
     }
@@ -53,19 +56,32 @@ export function exposeApi({ iframeId }: { iframeId: string }) {
 }
 
 type Listener = () => void;
-type Store = { isBridgeReady: boolean; kernelStatus: boolean };
+export type StoreState = { isBridgeReady: boolean; kernelStatus: boolean };
 
-// let _kernelStatus: any;
-let stateStore: Store;
+let state = {
+  isBridgeReady: false,
+  kernelStatus: false
+};
 const listeners = new Set<Listener>();
-// let listeners: any[] = [];
+export const store = {
+  getState() {
+    return state;
+  },
 
-export const externalStore = {
+  setState(newState: Partial<StoreState>) {
+    const mergedState = { ...state, ...newState };
+
+    state = mergedState;
+    listeners.forEach(listener => listener());
+  },
+
   subscribe(listener: Listener) {
     listeners.add(listener);
     return () => listeners.delete(listener);
   },
-  getSnapshot() {
-    return stateStore;
+
+  shallowEqual(a: StoreState, b: StoreState) {
+    const keys = Object.keys(a) as (keyof StoreState)[];
+    return keys.every(key => a[key] === b[key]);
   }
 };

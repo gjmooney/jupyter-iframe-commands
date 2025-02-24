@@ -1,6 +1,6 @@
 import { ICommandBridgeRemote } from 'jupyter-iframe-commands';
-import { externalStore } from 'jupyter-iframe-commands-host';
-import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useEffect, useState } from 'react';
+import { useStore } from './useJupyterStuff';
 
 interface IKernelInfoProps {
   bridge: () => ICommandBridgeRemote;
@@ -10,24 +10,29 @@ const KernelInfo = ({ bridge }: IKernelInfoProps) => {
   const [kernelName, setKernelName] = useState('Loading...');
   const [className, setClassName] = useState('idle');
 
-  const externalValue = useSyncExternalStore(
-    externalStore.subscribe,
-    externalStore.getSnapshot
-  );
+  // const externalValue = useSyncExternalStore(
+  //   externalStore.subscribe,
+  //   externalStore.getSnapshot
+  // );
+
+  const kernelStatus = useStore(state => state.kernelStatus);
+  const bridgeReady = useStore(state => state.isBridgeReady);
 
   useEffect(() => {
-    console.log('externalValue status', externalValue);
-    setClassName(externalValue?.kernelStatus ? 'busy' : 'idle');
+    console.log('externalValue status', kernelStatus);
+    setClassName(kernelStatus ? 'busy' : 'idle');
+  }, [kernelStatus]);
 
+  useEffect(() => {
     const getKernelName = async () => {
       const displayName = await bridge().getKernelDisplayName();
       setKernelName(displayName);
     };
 
-    if (externalValue?.isBridgeReady) {
+    if (bridgeReady) {
       getKernelName();
     }
-  }, [externalValue]);
+  }, [bridgeReady]);
 
   const handleClick = async () => {
     bridge().execute('notebook:change-kernel', {});
