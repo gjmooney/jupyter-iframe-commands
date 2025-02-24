@@ -7,31 +7,27 @@ interface IKernelInfoProps {
 }
 
 const KernelInfo = ({ bridge }: IKernelInfoProps) => {
-  const [bridgeReady, setBridgeReady] = useState(false);
   const [kernelName, setKernelName] = useState('Loading...');
   const [className, setClassName] = useState('idle');
 
   const externalValue = useSyncExternalStore(
-    callback => externalStore.subscribe(callback),
-    () => externalStore.value
+    externalStore.subscribe,
+    externalStore.getSnapshot
   );
 
   useEffect(() => {
-    setClassName(externalValue ? 'busy' : 'idle');
-    console.log('externalValue', externalValue);
-  }, [externalValue]);
+    console.log('externalValue status', externalValue);
+    setClassName(externalValue?.kernelStatus ? 'busy' : 'idle');
 
-  useEffect(() => {
     const getKernelName = async () => {
       const displayName = await bridge().getKernelDisplayName();
-
       setKernelName(displayName);
     };
 
-    if (bridgeReady) {
+    if (externalValue?.isBridgeReady) {
       getKernelName();
     }
-  }, [bridgeReady]);
+  }, [externalValue]);
 
   const handleClick = async () => {
     bridge().execute('notebook:change-kernel', {});

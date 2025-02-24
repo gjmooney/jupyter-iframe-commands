@@ -31,8 +31,21 @@ export function exposeApi({ iframeId }: { iframeId: string }) {
   }
   const endpoint = windowEndpoint(iframe.contentWindow);
   const hostApi = {
+    async setReady(val: boolean) {
+      // externalStore.value = stat;
+      stateStore = { ...stateStore, isBridgeReady: val };
+      // emitChange();
+      listeners.forEach(listener => listener());
+
+      console.log('stateStore', stateStore);
+    },
     async kernelStatus(stat: boolean) {
-      externalStore.value = stat;
+      // externalStore.value = stat;
+      stateStore = { ...stateStore, kernelStatus: stat };
+      // emitChange();
+      listeners.forEach(listener => listener());
+
+      // console.log('stateStore', stateStore);
     }
   };
 
@@ -40,20 +53,19 @@ export function exposeApi({ iframeId }: { iframeId: string }) {
 }
 
 type Listener = () => void;
+type Store = { isBridgeReady: boolean; kernelStatus: boolean };
 
-let _externalValue: any;
+// let _kernelStatus: any;
+let stateStore: Store;
 const listeners = new Set<Listener>();
+// let listeners: any[] = [];
 
 export const externalStore = {
-  get value() {
-    return _externalValue;
-  },
-  set value(newValue: any) {
-    _externalValue = newValue;
-    listeners.forEach(listener => listener());
-  },
   subscribe(listener: Listener) {
     listeners.add(listener);
     return () => listeners.delete(listener);
+  },
+  getSnapshot() {
+    return stateStore;
   }
 };
