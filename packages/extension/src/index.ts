@@ -9,7 +9,7 @@ import {
 import { INotebookTracker } from '@jupyterlab/notebook';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { ReadonlyPartialJSONObject } from '@lumino/coreutils';
-import { expose, windowEndpoint } from 'comlink';
+import { expose, windowEndpoint, wrap } from 'comlink';
 import { ICommandBridgeRemote } from './interface';
 
 /**
@@ -63,14 +63,13 @@ const plugin: JupyterFrontEndPlugin<void> = {
       }
     };
 
-    labStatus.busySignal.connect(() => {
-      window.parent.postMessage(
-        { id: 'kernel-status', isBusy: labStatus.isBusy },
-        '*'
-      );
+    labStatus.busySignal.connect(async () => {
+      await host.kernelStatus(labStatus.isBusy);
     });
 
     const endpoint = windowEndpoint(self.parent);
+    const host = wrap<any>(endpoint); // TODO: fix typings?
+
     expose(api, endpoint);
 
     //TODO targetOrigin should be host page

@@ -1,5 +1,6 @@
 import { ICommandBridgeRemote } from 'jupyter-iframe-commands';
-import { useEffect, useState } from 'react';
+import { externalStore } from 'jupyter-iframe-commands-host';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 
 interface IKernelInfoProps {
   bridge: () => ICommandBridgeRemote;
@@ -10,14 +11,15 @@ const KernelInfo = ({ bridge }: IKernelInfoProps) => {
   const [kernelName, setKernelName] = useState('Loading...');
   const [className, setClassName] = useState('idle');
 
+  const externalValue = useSyncExternalStore(
+    callback => externalStore.subscribe(callback),
+    () => externalStore.value
+  );
+
   useEffect(() => {
-    window.addEventListener('message', e => {
-      if (e.data.id === 'kernel-status') {
-        setClassName(e.data.isBusy ? 'busy' : 'idle');
-        setBridgeReady(true);
-      }
-    });
-  }, []);
+    setClassName(externalValue ? 'busy' : 'idle');
+    console.log('externalValue', externalValue);
+  }, [externalValue]);
 
   useEffect(() => {
     const getKernelName = async () => {

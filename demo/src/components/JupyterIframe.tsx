@@ -1,5 +1,5 @@
 import { ICommandBridgeRemote } from 'jupyter-iframe-commands';
-import { createBridge } from 'jupyter-iframe-commands-host';
+import { createBridge, exposeApi } from 'jupyter-iframe-commands-host';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
 interface IProps {
@@ -36,6 +36,7 @@ const JupyterIframe = forwardRef(
     };
 
     useEffect(() => {
+      exposeApi({ iframeId: 'jupyterlab' });
       window.onmessage = async e => {
         if (e.data === 'extension-loaded') {
           bridgeRef.current = createBridge({ iframeId: 'jupyterlab' });
