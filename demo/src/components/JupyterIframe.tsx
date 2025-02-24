@@ -1,6 +1,7 @@
 import { ICommandBridgeRemote } from 'jupyter-iframe-commands';
 import { createBridge, exposeApi } from 'jupyter-iframe-commands-host';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { useGetJupyterInfo } from './FileMenuBar/useGetJupyterInfo';
 
 interface IProps {
   iframeSrc: string;
@@ -12,6 +13,8 @@ const JupyterIframe = forwardRef(
   ({ iframeSrc, onBridgeReady }: IProps, ref) => {
     const iframeRef = useRef<HTMLIFrameElement>(null);
     const bridgeRef = useRef<ICommandBridgeRemote>(null);
+
+    const isBridgeReady = useGetJupyterInfo(state => state.isBridgeReady);
 
     const exportCss = () => {
       const command = 'jupyter-import-css';
@@ -37,14 +40,15 @@ const JupyterIframe = forwardRef(
 
     useEffect(() => {
       exposeApi({ iframeId: 'jupyterlab' });
-      window.onmessage = async e => {
-        if (e.data === 'extension-loaded') {
-          bridgeRef.current = createBridge({ iframeId: 'jupyterlab' });
-          onBridgeReady(true);
-          exportCss();
-        }
-      };
     }, []);
+
+    useEffect(() => {
+      if (isBridgeReady) {
+        bridgeRef.current = createBridge({ iframeId: 'jupyterlab' });
+        onBridgeReady(true);
+        exportCss();
+      }
+    }, [isBridgeReady]);
 
     useImperativeHandle(ref, () => ({
       getBridge: () => bridgeRef.current,

@@ -71,7 +71,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     //TODO targetOrigin should be host page
     app.started.then(() => {
-      window.parent?.postMessage('extension-loaded', '*');
       host.setReady(true);
     });
   }
