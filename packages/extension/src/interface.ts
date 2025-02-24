@@ -20,11 +20,4 @@ export interface ICommandBridgeRemote {
    * @returns An array of strings representing the names of all available commands.
    */
   listCommands(): Promise<string[]>;
-
-  /**
-   * Get the display name of the active kernel
-   *
-   * @returns A string representing the names of the active kernel.
-   */
-  getKernelDisplayName(): Promise<string>;
 }

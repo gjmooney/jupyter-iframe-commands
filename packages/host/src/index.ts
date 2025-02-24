@@ -2,6 +2,16 @@
 // Distributed under the terms of the Modified BSD License.
 import { expose, windowEndpoint, wrap } from 'comlink';
 import { ICommandBridgeRemote } from 'jupyter-iframe-commands';
+
+type Listener = () => void;
+export interface IJupyterInfo {
+  isBridgeReady: boolean;
+  kernelInfo: {
+    kernelName: string;
+    isKernelBusy: boolean;
+  };
+}
+
 /**
  * A bridge to expose actions on JupyterLab commands.
  */
@@ -23,6 +33,9 @@ export function createBridge({ iframeId }: { iframeId: string }) {
   return wrap<ICommandBridgeRemote>(windowEndpoint(iframe.contentWindow));
 }
 
+/**
+ * Define host package api and expose it to Jupyter extension
+ */
 export function exposeApi({ iframeId }: { iframeId: string }) {
   const iframe = document.getElementById(iframeId) as HTMLIFrameElement;
 
@@ -32,56 +45,42 @@ export function exposeApi({ iframeId }: { iframeId: string }) {
   const endpoint = windowEndpoint(iframe.contentWindow);
   const hostApi = {
     async setReady(val: boolean) {
-      // externalStore.value = stat;
-      // stateStore = { ...stateStore, isBridgeReady: val };
-      store.setState({ isBridgeReady: val });
-      // emitChange();
-      // listeners.forEach(listener => listener());
-
-      console.log('stateStore', store.getState());
+      jupyterInfo.setState({ isBridgeReady: val });
     },
-    async kernelStatus(stat: boolean) {
-      // externalStore.value = stat;
-      // stateStore = { ...stateStore, kernelStatus: stat };
-      store.setState({ kernelStatus: stat });
-      // emitChange();
-
-      // listeners.forEach(listener => listener());
-
-      // console.log('stateStore', stateStore);
+    async kernelStatus(displayName: string, stat: boolean) {
+      jupyterInfo.setState({
+        kernelInfo: { kernelName: displayName, isKernelBusy: stat }
+      });
     }
   };
 
   expose(hostApi, endpoint);
 }
 
-type Listener = () => void;
-export type StoreState = { isBridgeReady: boolean; kernelStatus: boolean };
-
-let state = {
+// Create observable state for consuming app to subscribe to
+let jupyterInfoState = {
   isBridgeReady: false,
-  kernelStatus: false
+  kernelInfo: {
+    kernelName: 'Loading...',
+    isKernelBusy: false
+  }
 };
+
 const listeners = new Set<Listener>();
-export const store = {
+export const jupyterInfo = {
   getState() {
-    return state;
+    return jupyterInfoState;
   },
 
-  setState(newState: Partial<StoreState>) {
-    const mergedState = { ...state, ...newState };
+  setState(newState: Partial<IJupyterInfo>) {
+    const mergedState = { ...jupyterInfoState, ...newState };
 
-    state = mergedState;
+    jupyterInfoState = mergedState;
     listeners.forEach(listener => listener());
   },
 
   subscribe(listener: Listener) {
     listeners.add(listener);
     return () => listeners.delete(listener);
-  },
-
-  shallowEqual(a: StoreState, b: StoreState) {
-    const keys = Object.keys(a) as (keyof StoreState)[];
-    return keys.every(key => a[key] === b[key]);
   }
 };

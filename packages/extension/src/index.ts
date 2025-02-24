@@ -54,17 +54,14 @@ const plugin: JupyterFrontEndPlugin<void> = {
       },
       async listCommands() {
         return commands.listCommands();
-      },
-      async getKernelDisplayName() {
-        const kernel = await commands.execute('notebook:get-kernel', {});
-        const spec = await kernel.spec;
-
-        return await spec.display_name;
       }
     };
 
     labStatus.busySignal.connect(async () => {
-      await host.kernelStatus(labStatus.isBusy);
+      const kernelSpec =
+        await tracker.currentWidget?.sessionContext?.session?.kernel?.spec;
+      const displayName = kernelSpec ? kernelSpec.display_name : 'Loading...';
+      await host.kernelStatus(displayName, labStatus.isBusy);
     });
 
     const endpoint = windowEndpoint(self.parent);
