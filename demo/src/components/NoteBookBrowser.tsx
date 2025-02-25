@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-const sampleNotebooks = ['example.ipynb', 'example2.ipynb'];
+const sampleNotebooks = ['example.ipynb', 'soma.ipynb'];
 
 const NoteBookBrowser = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);
