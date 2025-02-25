@@ -18,9 +18,7 @@ const ModeToggle = () => {
     if (isLite) {
       currentUrl = `./lite/${isNotebookView ? 'notebooks/index.html?path=example.ipynb' : 'index.html'}`;
     } else {
-      currentUrl.pathname = isNotebookView
-        ? '/notebooks/example.ipynb'
-        : '/lab';
+      currentUrl.pathname = isNotebookView ? '/notebooks/soma.ipynb' : '/lab';
       currentUrl.search = '';
     }
 

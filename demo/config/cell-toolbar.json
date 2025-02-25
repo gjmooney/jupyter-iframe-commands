@@ -1,0 +1,24 @@
+{
+  "showToolbar": true,
+  "toolbar": [
+    {
+      "name": "run-cell",
+      "icon": "ui-components:run",
+      "command": "notebook:run-cell",
+      "rank": 1
+    },
+    { "name": "copy-cell", "command": "notebook:copy-cell", "rank": 2 },
+    {
+      "name": "duplicate-cell",
+      "command": "notebook:duplicate-below",
+      "rank": 3
+    },
+
+    {
+      "command": "notebook:delete-cell",
+      "icon": "ui-components:delete",
+      "name": "delete-cell",
+      "rank": 4
+    }
+  ]
+}

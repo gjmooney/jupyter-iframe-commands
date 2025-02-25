@@ -1,0 +1,84 @@
+:root {
+  --jp-mirror-editor-keyword-color: #581c87 !important;
+  --jp-mirror-editor-builtin-color: #2563eb !important;
+  --jp-mirror-editor-link-color: #644120 !important;
+  --jp-content-font-color1: #525252 !important;
+  --jp-cell-editor-background: #fdfafc !important;
+  --jp-cell-editor-border-color: #ededed !important;
+  --jp-cell-editor-active-background: #f5f5f5 !important;
+  --jp-cell-editor-active-border-color: #d4d4d4 !important;
+  --jp-code-font-size: 12px !important;
+  --jp-code-font-family-default: 'Fira Code' !important;
+}
+
+#menu-panel-wrapper {
+  display: none;
+}
+
+#main-panel {
+  top: unset !important;
+  box-shadow: #2980b9;
+}
+
+.jp-InputArea-editor {
+  border-radius: 6px;
+}
+
+.jp-MarkdownOutput {
+  border-radius: 0.5rem;
+  border: 1px solid #e0e0e0;
+  padding: 0 0.3rem;
+  /* border: 0; */
+  margin: 0;
+  /* padding: 0; */
+  background-color: #fdfafc;
+  text-shadow: none;
+}
+
+.jp-Notebook.jp-mod-commandMode .jp-Cell.jp-mod-active:focus-visible {
+  box-shadow: unset;
+}
+
+.lm-SplitPanel-child {
+  background-color: #ffffff;
+}
+
+.jp-WindowedPanel-outer {
+  background-color: #ffffff !important;
+  padding: 0;
+}
+
+body[data-notebook='notebooks'] .jp-WindowedPanel-viewport {
+  box-shadow: none;
+}
+
+.jp-NotebookPanel-toolbar {
+  display: none;
+}
+
+.jp-NotebookPanel-notebook {
+  top: 0 !important;
+}
+
+.jp-Notebook .jp-Cell.jp-mod-active .jp-Collapser {
+  visibility: hidden;
+}
+
+.jp-cell-toolbar {
+  padding: 2px;
+  border: 1px solid #ededed;
+  border-radius: 4px;
+  background-color: #ffffff !important;
+  right: 12px;
+  top: -14px;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.08) !important;
+  border-radius: 4px;
+}
+
+.jp-cell-toolbar svg path {
+  fill: #525252 !important;
+}
+
+.jp-Cell-inputArea {
+  overflow: visible;
+}
