@@ -8,14 +8,16 @@
   --jp-cell-editor-active-background: #f5f5f5 !important;
   --jp-cell-editor-active-border-color: #d4d4d4 !important;
   --jp-code-font-size: 12px !important;
+  --jp-code-font-family: 'Fira Code' !important;
   --jp-code-font-family-default: 'Fira Code' !important;
   --jp-cell-inprompt-font-color: #525252 !important;
   --jp-cell-prompt-not-active-font-color: #737373 !important;
   --jp-content-font-size1: 12px !important;
   --jp-content-font-size5: 24px !important;
   --jp-content-font-color1: #262626 !important;
-  --jp-content-font-family: 'Inter' !important;
+  --jp-content-font-family: Inter !important;
   --jp-content-line-height: 16px !important;
+  --jp-mirror-editor-header-color: #2463eb !important;
 }
 
 #menu-panel-wrapper {
@@ -48,10 +50,6 @@
   line-height: 30px;
 
   color: #262626;
-}
-
-.jp-MarkdownOutput > p {
-  /* font-family: 'Inter'; */
 }
 
 .jp-mod-selected .jp-MarkdownOutput {
