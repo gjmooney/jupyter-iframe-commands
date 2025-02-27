@@ -20,6 +20,9 @@
   --jp-mirror-editor-header-color: #2463eb !important;
   --jp-input-border-color: #d4d4d4 !important;
   --jp-input-background: #ffffff !important;
+  --jp-accept-color-normal: #0e0e0e !important;
+  --jp-accept-color-hover: #282828 !important;
+  --jp-reject-color-hover: #d8d8d8 !important;
 }
 
 #menu-panel-wrapper {
@@ -126,54 +129,35 @@ body[data-notebook='notebooks'] .jp-WindowedPanel-viewport {
 }
 
 .jp-Dialog-content {
-  /* min-height: 271px; */
   min-width: 400px;
   border-radius: 16px;
   background-color: #ffffff;
   box-shadow: 0px 16px 20px -4px rgba(0, 0, 0, 0.15);
-  padding: 16px 24px;
-  /* padding: 16px 24px 20px 16px; */
-  /* padding: 0; */
+  padding: 0;
   border: 1px solid transparent;
-  /* justify-content: center; */
-  /* align-items: center; */
+  resize: none;
 }
 
 .jp-Dialog-header {
-  /* height: 64px; */
-
-  /* padding: 16px; */
-  /* padding: 16px 24px; */
-  /* padding: 12px 12px 12px 24px; */
+  padding: 16px 24px;
   /* font-style: normal; */
-
   /* line-height: 24px; */
-  /* identical to box height, or 120% */
   color: #262626;
-  /* padding: 20px 20px 20px 24px; */
-  /* padding: 8px 8px 8px 0px; */
-  /* min-height: 40px; */
   font-family: 'Inter';
   font-weight: 700;
   font-size: 20px;
-  /* min-width: 400px; */
-  /* align-self: stretch; */
 }
 
 :not(.jp-mod-styled).jp-Dialog-body {
   border-top: 1px solid #d4d4d4;
   border-bottom: 1px solid #d4d4d4;
-  /* padding-top: 16px; */
-  /* padding-bottom: 32px; */
-  /* padding-left: 24px; */
-  /* padding-right: 24px; */
-  padding: 16px 24px 32px;
-  /* padding: 16px 24px 24px; */
+  padding: 16px 48px 32px;
   margin: 0 -24px;
-  /* padding-top: 16px; */
   gap: 4px;
-  /* min-width: 400px; */
-  /* align-self: stretch; */
+}
+
+input.jp-mod-styled.jp-Dialog-body {
+  margin: 16px;
 }
 
 .jp-Dialog-body > label {
@@ -183,17 +167,11 @@ body[data-notebook='notebooks'] .jp-WindowedPanel-viewport {
   font-weight: 600;
   font-size: 12px;
   line-height: 19px;
-  /* identical to box height, or 158% */
-  /* display: flex; */
-  /* align-items: flex-end; */
-  /* padding: 0 16px; */
-
   color: #525252;
 }
 
 .jp-Dialog-body > .jp-select-wrapper {
   height: 40px;
-  /* padding: 0 16px; */
 }
 
 .jp-Dialog-body > .jp-select-wrapper > select {
@@ -204,7 +182,6 @@ body[data-notebook='notebooks'] .jp-WindowedPanel-viewport {
   font-size: 13px;
   /* line-height: 20px; */
   /* identical to box height, or 154% */
-
   color: #262626;
 }
 
@@ -214,19 +191,15 @@ body[data-notebook='notebooks'] .jp-WindowedPanel-viewport {
 }
 
 .jp-Dialog-footer {
-  /* padding: 16px 24px; */
-  /* padding: 12px 12px 12px 24px; */
-  /* height: 72px; */
-  /* min-width: 400px; */
-  /* align-self: stretch; */
+  padding: 16px 24px;
   background-color: #f5f5f5;
+  margin: 0;
 }
 
 label[title~='kernel'] {
-  /* background-color: red; */
   position: absolute;
   top: -35px;
-  left: 10px;
+  left: 21px;
   height: 16px;
   /* body/sm/500 */
   font-family: 'Inter';
@@ -238,11 +211,10 @@ label[title~='kernel'] {
   display: flex;
   align-items: center;
   text-align: center;
-
   color: #262626;
 }
 
-label[title~='kernel'] > input {
+label[title~='kernel'] > input[type='checkbox'] {
   height: 16px !important;
   width: 16px;
   background-color: #fff;
@@ -250,7 +222,54 @@ label[title~='kernel'] > input {
   border-radius: 4px;
   margin-right: 8px;
   border: none;
-  appearance: checkbox;
-  -moz-appearance: none !important;
-  -webkit-appearance: none !important;
+  outline: none;
+  accent-color: #282828;
+}
+
+input.jp-mod-styled:focus {
+  border-color: #0e0e0e;
+}
+
+input[type='checkbox'].jp-mod-styled:focus-visible {
+  outline-color: #0e0e0e;
+}
+
+.jp-mod-focused {
+  outline-color: #0e0e0e !important;
+  border-color: #0e0e0e !important;
+  /* background-color: red; */
+  color: green;
+}
+
+dialog select:focus {
+  border-color: #0e0e0e;
+}
+
+button.jp-mod-styled {
+  height: 40px;
+  display: flex;
+  padding: 12px 16px;
+  align-items: center;
+  width: 69px;
+  justify-content: center;
+}
+
+.jp-Dialog-buttonLabel {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
+  /* identical to box height, or 123% */
+  display: flex;
+  align-items: center;
+  color: #fafafa;
+}
+
+.jp-Dialog-button.jp-mod-reject.jp-mod-styled {
+  background-color: transparent;
+}
+
+.jp-Dialog-button.jp-mod-reject > .jp-Dialog-buttonLabel {
+  color: #262626;
 }
