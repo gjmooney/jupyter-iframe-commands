@@ -125,11 +125,108 @@ body[data-notebook='notebooks'] .jp-WindowedPanel-viewport {
   border-right: 0;
 }
 
+.jp-Dialog-content {
+  /* min-height: 271px; */
+  min-width: 400px;
+  border-radius: 16px;
+  background-color: #ffffff;
+  box-shadow: 0px 16px 20px -4px rgba(0, 0, 0, 0.15);
+  padding: 16px 24px;
+  /* padding: 16px 24px 20px 16px; */
+  /* padding: 0; */
+  border: 1px solid transparent;
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+
+.jp-Dialog-header {
+  /* height: 64px; */
+
+  /* padding: 16px; */
+  /* padding: 16px 24px; */
+  /* padding: 12px 12px 12px 24px; */
+  /* font-style: normal; */
+
+  /* line-height: 24px; */
+  /* identical to box height, or 120% */
+  color: #262626;
+  /* padding: 20px 20px 20px 24px; */
+  /* padding: 8px 8px 8px 0px; */
+  /* min-height: 40px; */
+  font-family: 'Inter';
+  font-weight: 700;
+  font-size: 20px;
+  /* min-width: 400px; */
+  /* align-self: stretch; */
+}
+
+:not(.jp-mod-styled).jp-Dialog-body {
+  border-top: 1px solid #d4d4d4;
+  border-bottom: 1px solid #d4d4d4;
+  /* padding-top: 16px; */
+  /* padding-bottom: 32px; */
+  /* padding-left: 24px; */
+  /* padding-right: 24px; */
+  padding: 16px 24px 32px;
+  /* padding: 16px 24px 24px; */
+  margin: 0 -24px;
+  /* padding-top: 16px; */
+  gap: 4px;
+  /* min-width: 400px; */
+  /* align-self: stretch; */
+}
+
+.jp-Dialog-body > label {
+  height: 19px;
+  font-family: 'Inter';
+  /* font-style: normal; */
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 19px;
+  /* identical to box height, or 158% */
+  /* display: flex; */
+  /* align-items: flex-end; */
+  /* padding: 0 16px; */
+
+  color: #525252;
+}
+
+.jp-Dialog-body > .jp-select-wrapper {
+  height: 40px;
+  /* padding: 0 16px; */
+}
+
+.jp-Dialog-body > .jp-select-wrapper > select {
+  /* body-text/md/500 */
+  font-family: 'Inter';
+  /* font-style: normal; */
+  font-weight: 500;
+  font-size: 13px;
+  /* line-height: 20px; */
+  /* identical to box height, or 154% */
+
+  color: #262626;
+}
+
+.jp-Dialog-body > .jp-select-wrapper svg {
+  top: 11px;
+  stroke: #737373;
+}
+
+.jp-Dialog-footer {
+  /* padding: 16px 24px; */
+  /* padding: 12px 12px 12px 24px; */
+  /* height: 72px; */
+  /* min-width: 400px; */
+  /* align-self: stretch; */
+  background-color: #f5f5f5;
+}
+
 label[title~='kernel'] {
   /* background-color: red; */
   position: absolute;
   top: -35px;
-  left: 14px;
+  left: 10px;
   height: 16px;
   /* body/sm/500 */
   font-family: 'Inter';
@@ -156,98 +253,4 @@ label[title~='kernel'] > input {
   appearance: checkbox;
   -moz-appearance: none !important;
   -webkit-appearance: none !important;
-}
-
-.jp-Dialog-content {
-  min-height: 271px;
-  min-width: 400px;
-  border-radius: 16px;
-  background-color: #ffffff;
-  box-shadow: 0px 16px 20px -4px rgba(0, 0, 0, 0.15);
-  /* padding: 20px 20px 20px 20px; */
-  padding: 0;
-  border: 1px solid transparent;
-  justify-content: center;
-  align-items: center;
-}
-
-.jp-Dialog-header {
-  /* height: 64px; */
-
-  padding: 16px 24px;
-  /* padding: 12px 12px 12px 24px; */
-  /* font-style: normal; */
-
-  /* line-height: 24px; */
-  /* identical to box height, or 120% */
-  color: #262626;
-  /* padding: 20px 20px 20px 24px; */
-  /* padding: 8px 8px 8px 0px; */
-  min-height: 40px;
-  font-family: 'Inter';
-  font-weight: 700;
-  font-size: 20px;
-  min-width: 400px;
-  /* align-self: stretch; */
-}
-
-:not(.jp-mod-styled).jp-Dialog-body {
-  border-top: 1px solid #d4d4d4;
-  border-bottom: 1px solid #d4d4d4;
-  padding: 16px 24px 24px;
-  margin: 0 -21px;
-  padding-top: 16px;
-  gap: 4px;
-  min-width: 400px;
-  /* align-self: stretch; */
-}
-
-.jp-Dialog-body > label {
-  height: 19px;
-  font-family: 'Inter';
-  /* font-style: normal; */
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 19px;
-  /* identical to box height, or 158% */
-  /* display: flex; */
-  /* align-items: flex-end; */
-  padding: 0 16px;
-
-  color: #525252;
-}
-
-.jp-Dialog-body > .jp-select-wrapper {
-  height: 40px;
-}
-
-.jp-Dialog-body > .jp-select-wrapper > select {
-  /* body-text/md/500 */
-  font-family: 'Inter';
-  /* font-style: normal; */
-  font-weight: 500;
-  font-size: 13px;
-  /* line-height: 20px; */
-  /* identical to box height, or 154% */
-
-  color: #262626;
-}
-
-.jp-Dialog-body > .jp-select-wrapper svg {
-  top: 11px;
-  stroke: #737373;
-}
-
-.jp-Dialog-body > div > select {
-  /* background-color: #ffffff; */
-  /* border: 1px solid #d4d4d4; */
-}
-
-.jp-Dialog-footer {
-  padding: 16px 24px;
-  /* padding: 12px 12px 12px 24px; */
-  height: 72px;
-  min-width: 400px;
-  /* align-self: stretch; */
-  background-color: #f5f5f5;
 }
