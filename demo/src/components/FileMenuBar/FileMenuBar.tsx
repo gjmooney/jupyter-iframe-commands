@@ -15,7 +15,6 @@ interface IFileMenuBarProps {
 
 const FileMenuBar = ({ bridge, submitCommand }: IFileMenuBarProps) => {
   const handleSave = () => {
-    console.log('saving');
     submitCommand('docmanager:save', '');
   };
 

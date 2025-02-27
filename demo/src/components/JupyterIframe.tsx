@@ -5,69 +5,64 @@ import { useGetJupyterInfo } from './FileMenuBar/useGetJupyterInfo';
 
 interface IProps {
   iframeSrc: string;
-  onBridgeReady: (value: boolean) => void;
-  submitCommand: (command: string, args: string) => void;
 }
 
-const JupyterIframe = forwardRef(
-  ({ iframeSrc, onBridgeReady }: IProps, ref) => {
-    const iframeRef = useRef<HTMLIFrameElement>(null);
-    const bridgeRef = useRef<ICommandBridgeRemote>(null);
+const JupyterIframe = forwardRef(({ iframeSrc }: IProps, ref) => {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const bridgeRef = useRef<ICommandBridgeRemote>(null);
 
-    const isBridgeReady = useGetJupyterInfo(state => state.isBridgeReady);
+  const isBridgeReady = useGetJupyterInfo(state => state.isBridgeReady);
 
-    const exportCss = () => {
-      const command = 'jupyter-import-css';
-      // from MDN
-      const getAllCss = [...document.styleSheets]
-        .map(styleSheet => {
-          try {
-            return [...styleSheet.cssRules].map(rule => rule.cssText).join('');
-          } catch (e) {
-            console.log(
-              'Access to stylesheet %s is denied. Ignoring…',
-              styleSheet.href
-            );
-          }
-        })
-        .filter(Boolean)
-        .join('\n');
+  const exportCss = () => {
+    const command = 'jupyter-import-css';
+    // from MDN
+    const getAllCss = [...document.styleSheets]
+      .map(styleSheet => {
+        try {
+          return [...styleSheet.cssRules].map(rule => rule.cssText).join('');
+        } catch (e) {
+          console.log(
+            'Access to stylesheet %s is denied. Ignoring…',
+            styleSheet.href
+          );
+        }
+      })
+      .filter(Boolean)
+      .join('\n');
 
-      const parsedCSS = getAllCss.replace(/'/g, '"');
+    const parsedCSS = getAllCss.replace(/'/g, '"');
 
-      bridgeRef.current?.execute(command, { parsedCSS });
-    };
+    bridgeRef.current?.execute(command, { parsedCSS });
+  };
 
-    useEffect(() => {
-      exposeApi({ iframeId: 'jupyterlab' });
-    }, []);
+  useEffect(() => {
+    exposeApi({ iframeId: 'jupyterlab' });
+  }, []);
 
-    useEffect(() => {
-      if (isBridgeReady) {
-        bridgeRef.current = createBridge({ iframeId: 'jupyterlab' });
-        onBridgeReady(true);
-        exportCss();
-      }
-    }, [isBridgeReady]);
+  useEffect(() => {
+    if (isBridgeReady) {
+      bridgeRef.current = createBridge({ iframeId: 'jupyterlab' });
+      exportCss();
+    }
+  }, [isBridgeReady]);
 
-    useImperativeHandle(ref, () => ({
-      getBridge: () => bridgeRef.current,
-      listCommands: async () => await bridgeRef.current?.listCommands()
-    }));
+  useImperativeHandle(ref, () => ({
+    getBridge: () => bridgeRef.current,
+    listCommands: async () => await bridgeRef.current?.listCommands()
+  }));
 
-    return (
-      <>
-        <iframe
-          ref={iframeRef}
-          id="jupyterlab"
-          src={iframeSrc}
-          sandbox="allow-scripts allow-same-origin"
-          title="JupyterLab Instance"
-          loading="lazy"
-        ></iframe>
-      </>
-    );
-  }
-);
+  return (
+    <>
+      <iframe
+        ref={iframeRef}
+        id="jupyterlab"
+        src={iframeSrc}
+        sandbox="allow-scripts allow-same-origin"
+        title="JupyterLab Instance"
+        loading="lazy"
+      ></iframe>
+    </>
+  );
+});
 
 export default JupyterIframe;

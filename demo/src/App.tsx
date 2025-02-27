@@ -2,6 +2,7 @@ import { ICommandBridgeRemote } from 'jupyter-iframe-commands';
 import { useCallback, useRef, useState } from 'react';
 import ErrorDialog from './components/Error';
 import FileMenuBar from './components/FileMenuBar/FileMenuBar';
+import { useGetJupyterInfo } from './components/FileMenuBar/useGetJupyterInfo';
 import InputArea from './components/InputArea';
 import Instructions from './components/Instructions';
 import JupyterIframe from './components/JupyterIframe';
@@ -11,10 +12,11 @@ import NoteBookBrowser from './components/NoteBookBrowser';
 
 function App() {
   const [errorMessage, setErrorMessage] = useState('');
-  const [isBridgeReady, setIsBridgeReady] = useState(false);
 
   const dialogRef = useRef<HTMLDialogElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  const isBridgeReady = useGetJupyterInfo(state => state.isBridgeReady);
 
   const getBridge = useCallback((): ICommandBridgeRemote => {
     //@ts-expect-error wip
@@ -52,8 +54,6 @@ function App() {
         <JupyterIframe
           ref={iframeRef}
           iframeSrc={import.meta.env.VITE_DEMO_SRC}
-          onBridgeReady={setIsBridgeReady}
-          submitCommand={submitCommand}
         />{' '}
       </div>
 
