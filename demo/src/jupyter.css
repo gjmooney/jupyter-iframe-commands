@@ -273,3 +273,25 @@ button.jp-mod-styled {
 .jp-Dialog-button.jp-mod-reject > .jp-Dialog-buttonLabel {
   color: #262626;
 }
+
+.jp-select-wrapper > .jp-mod-styled > optgroup {
+  font-family: Inter;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 19px;
+  letter-spacing: 0%;
+}
+
+.jp-select-wrapper > .jp-mod-styled > optgroup > option {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  color: #000000de;
+}
+
+.jp-ThemedContainer {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
