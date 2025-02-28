@@ -2,12 +2,14 @@
 // Distributed under the terms of the Modified BSD License.
 
 import {
+  ILabStatus,
   JupyterFrontEnd,
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
+import { INotebookTracker } from '@jupyterlab/notebook';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { ReadonlyPartialJSONObject } from '@lumino/coreutils';
-import { expose, windowEndpoint } from 'comlink';
+import { expose, windowEndpoint, wrap } from 'comlink';
 import { ICommandBridgeRemote } from './interface';
 
 /**
@@ -18,9 +20,12 @@ const plugin: JupyterFrontEndPlugin<void> = {
   autoStart: true,
   description:
     'A plugin to expose an API for interacting with JupyterLab from a parent page.',
+  requires: [ILabStatus, INotebookTracker],
   optional: [ISettingRegistry],
   activate: async (
     app: JupyterFrontEnd,
+    labStatus: ILabStatus,
+    tracker: INotebookTracker,
     settingRegistry: ISettingRegistry | null
   ) => {
     console.log('JupyterLab extension jupyter-iframe-commands is activated!');
@@ -48,25 +53,26 @@ const plugin: JupyterFrontEndPlugin<void> = {
         await commands.execute(command, args);
       },
       async listCommands() {
-        return await commands.listCommands();
+        return commands.listCommands();
       }
     };
 
+    labStatus.busySignal.connect(async () => {
+      const kernelSpec =
+        await tracker.currentWidget?.sessionContext?.session?.kernel?.spec;
+      const displayName = kernelSpec ? kernelSpec.display_name : 'Loading...';
+      await host.kernelStatus(displayName, labStatus.isBusy);
+    });
+
     const endpoint = windowEndpoint(self.parent);
+    const host = wrap<any>(endpoint); // TODO: fix typings?
+
     expose(api, endpoint);
 
     //TODO targetOrigin should be host page
-    window.parent?.postMessage('extension-loaded', '*');
-
-    // Add host css to Jupyter
-    window.onmessage = e => {
-      if (e.data.type === 'CSS') {
-        const styleTag = document.createElement('style');
-        styleTag.id = 'searchText';
-        styleTag.innerText = e.data.style;
-        document.head.appendChild(styleTag);
-      }
-    };
+    app.started.then(() => {
+      host.setReady(true);
+    });
   }
 };
 
